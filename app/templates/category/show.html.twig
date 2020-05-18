@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ 'title_category_view'|trans }}
+{% endblock%}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'title_category_view'|trans }}</h1>
+    {% if category is defined and category|length %}
+        <dl class=="dl-horizontal">
+            <dt>Name</dt>
+            <dd>{{ category.name }}</dd>
+        <dt {{ 'label_actions'|trans }}</dt>
+        <dd>
+            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+        </dd>
+        </dl>
+    {% else %}
+        No category!
+    {% endif %}
+
+
+{% endblock %}
