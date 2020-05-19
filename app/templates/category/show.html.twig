@@ -12,8 +12,8 @@
 
     <h1>{{ 'title_category_view'|trans }}</h1>
     {% if category is defined and category|length %}
-        <dl class=="dl-horizontal">
-            <dt>Name</dt>
+        <dl>
+            <dt>{{ 'label_name'|trans }}</dt>
             <dd>{{ category.name }}</dd>
         <dt {{ 'label_actions'|trans }}</dt>
         <dd>

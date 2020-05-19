@@ -15,7 +15,7 @@
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>{{ 'label_name'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'category.name') }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
             <tbody>
