@@ -1,24 +1,22 @@
 <?php
 /**
- *  Category entity.
+ * Tag entity.
  */
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @ORM\Table(name="categories")
+ * @ORM\Entity(repositoryClass=TagRepository::class)
+ * @ORM\Table(name="tags")
  */
-class Category
+class Tag
 {
     /**
      * Primary key.
-     *
-     * @var int
      *
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -27,19 +25,14 @@ class Category
     private $id;
 
     /**
-     * Name.
+     * Title.
      *
-     * @var string
-     *
-     * @ORM\Column(
-     *     type="string",
-     *     length=45
-     * )
+     * @ORM\Column(type="string", length=45)
      */
-    private $name;
+    private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Record::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Record::class, mappedBy="tags")
      */
     private $records;
 
@@ -48,9 +41,10 @@ class Category
         $this->records = new ArrayCollection();
     }
 
-    /**Getter for id.
+    /**
+     * Getter for Id.
      *
-     * @return int|null Id
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -58,24 +52,23 @@ class Category
     }
 
     /**
-     * Getter for name.
+     * Getter for Title.
      *
-     * @return string|null Name
+     * @return string|null Title
      */
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Setter for Name.
+     * Setter for Title.
      *
-     * @param string $name Name
-     *
+     * @param string $title Title
      */
-    public function setName(string $name): void
+    public function setTitle(string $title): void
     {
-        $this->name = $name;
+        $this->title = $title;
     }
 
     /**
@@ -86,34 +79,21 @@ class Category
         return $this->records;
     }
 
-    /**
-     * @param Record $record
-     *
-     * @return $this
-     */
     public function addRecord(Record $record): self
     {
         if (!$this->records->contains($record)) {
             $this->records[] = $record;
-            $record->setCategory($this);
+            $record->addTag($this);
         }
 
         return $this;
     }
 
-    /**
-     * @param Record $record
-     *
-     * @return $this
-     */
     public function removeRecord(Record $record): self
     {
         if ($this->records->contains($record)) {
             $this->records->removeElement($record);
-            // set the owning side to null (unless already changed)
-            if ($record->getCategory() === $this) {
-                $record->setCategory(null);
-            }
+            $record->removeTag($this);
         }
 
         return $this;

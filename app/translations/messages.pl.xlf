@@ -18,6 +18,10 @@
                 <source>label_name</source>
                 <target>Nazwa</target>
             </trans-unit>
+            <trans-unit id="label_records">
+                <source>label_records</source>
+                <target>Płyty</target>
+            </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
                 <target>Pusta lista.</target>

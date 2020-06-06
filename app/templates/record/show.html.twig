@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+View record
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+<h1>Record detail</h1>
+
+    {% if record is defined and record|length %}
+
+    <dl>
+        <dt>Title</dt>
+        <dd>{{ record.title }}</dd>
+        <dt>Category</dt>
+        <dd>{{ record.category.name }}</dd>
+        <dt>Tags</dt>
+        {% for tags in record.tags %}
+        <dd>{{ tags.title }}</dd>
+        {% endfor %}
+        <dt>Actions</dt>
+        <dd>
+            <a href="{{ url('record_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+        </dd>
+    </dl>
+        {% else %}
+            No record!
+     {% endif %}
+{% endblock %}

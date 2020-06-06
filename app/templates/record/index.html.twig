@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Records
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{'label_records'|trans}}</h1>
+
+    {% if pagination is defined and pagination.items|length  %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'record.title') }}</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for record in pagination.items %}
+            <tr>
+                <td>{{ record.title }}</td>
+                <td>{{ record.category.name }}</td>
+                <td>
+                    <a href="{{ url('record_show', { 'id': record.id }) }}" title="{{ 'action_view'|trans }}">
+                        {{ 'action_view'|trans }}
+                    </a>
+                    <a href="{{ url('record_edit', {'id': record.id}) }}" title="'Edit">
+                        Edit
+                    </a>
+                    <a href="{{ url('record_delete', {'id': record.id}) }}" title="Delete">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% endif %}
+{% endblock %}

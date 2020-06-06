@@ -16,10 +16,31 @@ use Doctrine\Persistence\ManagerRegistry;
 class CategoryRepository extends ServiceEntityRepository
 {
     const PAGINATOR_ITEMS_PER_PAGE = 5;
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
     }
+
+    /**
+     * @param \App\Entity\Category $category
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Category $category): void
+    {
+        $this->_em->persist($category);
+        $this->_em->flush($category);
+    }
+
+    public function delete(Category $category): void
+    {
+        $this->_em->remove($category);
+        $this->_em->flush($category);
+    }
+
 
     /**
      * @return \Doctrine\ORM\QueryBuilder QueryBuilder

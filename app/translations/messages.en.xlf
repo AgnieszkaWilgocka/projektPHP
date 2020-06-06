@@ -18,6 +18,14 @@
                 <source>label_name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="label_title">
+                <source>label_title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="label_records">
+                <source>label_records</source>
+                <target>Records</target>
+            </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
                 <target>Empty list.</target>
@@ -28,7 +36,7 @@
             </trans-unit>
             <trans-unit id="title_category_view">
                 <source>title_category_view</source>
-                <target>Category view</target>
+                <target>Category view #%name%</target>
             </trans-unit>
         </body>
     </file>
