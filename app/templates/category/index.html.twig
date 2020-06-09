@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block body %}
+<div class="container">
+    <div class="card border-0 shadow my-5">
+        <div class="card-body p-5">
     <h1>{{ 'title_category_list'|trans }}</h1>
 
     {% if pagination is defined and pagination.items|length %}
@@ -26,12 +29,16 @@
                         <a href="{{ url('category_show', { 'id': category.id }) }}" title="{{ 'action_view'|trans }}">
                             {{ 'action_view'|trans}}
                         </a>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ url('category_edit', {'id': category.id}) }}" title="Edit">
                             Edit
                         </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ url('category_delete', {'id': category.id}) }}" title="Delete">
                             Delete
                         </a>
+                        {% endif %}
                     </td>
                 </tr>
         {% endfor %}
@@ -44,5 +51,8 @@
     {% else %}
     {{ 'message_empty_list'|trans }}
     {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
 

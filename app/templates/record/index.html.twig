@@ -8,6 +8,9 @@ Records
 {% endblock %}
 
 {% block body %}
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
 
     <h1>{{'label_records'|trans}}</h1>
 
@@ -29,12 +32,16 @@ Records
                     <a href="{{ url('record_show', { 'id': record.id }) }}" title="{{ 'action_view'|trans }}">
                         {{ 'action_view'|trans }}
                     </a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ url('record_edit', {'id': record.id}) }}" title="'Edit">
                         Edit
                     </a>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ url('record_delete', {'id': record.id}) }}" title="Delete">
                         Delete
                     </a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -45,4 +52,7 @@ Records
         </div>
 
     {% endif %}
+    </div>
+    </div>
+    </div>
 {% endblock %}

@@ -28,7 +28,7 @@
             </trans-unit>
             <trans-unit id="title_category_list">
                 <source>title_category_list</source>
-                <target>Lista kategorii</target>
+                <target>Kategorie</target>
             </trans-unit>
             <trans-unit id="title_category_view">
                 <source>title_category_view</source>

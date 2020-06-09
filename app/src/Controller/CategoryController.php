@@ -8,6 +8,7 @@ use \App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +63,7 @@ class CategoryController extends AbstractController
      *     name="category_show",
      *     requirements={"id": "[1-9]\d*"}
      * )
+     *
      */
     public function show(Category $category): Response
     {
@@ -84,6 +86,7 @@ class CategoryController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="category_create",
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function create(Request $request, CategoryRepository $categoryRepository): Response
     {
@@ -121,7 +124,9 @@ class CategoryController extends AbstractController
      *     name="category_edit",
      *     requirements={"id": "[1-9]\d*"},
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
+
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'PUT']);
@@ -161,7 +166,9 @@ class CategoryController extends AbstractController
      *     requirements={"id" : "[1-9]\d*"},
      *
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
+
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'DELETE']);

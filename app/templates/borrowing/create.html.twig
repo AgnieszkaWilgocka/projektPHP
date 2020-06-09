@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Borrowing
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
+<h1>Borrowing</h1>
+
+    {{ form_start(form, {methos: 'PUT', action: url('borrowing_create')}) }}
+    {{ form_widget(form) }}
+
+
+    <div class="form-group row float-sm-right">
+        <input type="submit" value="send" class="btn btn-primary" >
+    </div>
+
+    <div class="form-group row float-sm-left">
+        <a href="{{ url('record_index') }}" title="{{ 'action_back_to_list'|trans }}">
+        {{ 'action_back_to_list'|trans }}
+        </a>
+    </div>
+
+{{ form_end(form) }}
+    </div>
+    </div>
+    </div>
+{% endblock %}

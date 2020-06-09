@@ -38,11 +38,17 @@ class Record
     private $tags;
 
     /**
+     * @ORM\OneToMany(targetEntity=Borrowing::class, mappedBy="record")
+     */
+    private $borrowings;
+
+    /**
      * Record constructor.
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->borrowings = new ArrayCollection();
     }
 
     /**
@@ -118,6 +124,37 @@ class Record
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Borrowing[]
+     */
+    public function getBorrowings(): Collection
+    {
+        return $this->borrowings;
+    }
+
+    public function addBorrowing(Borrowing $borrowing): self
+    {
+        if (!$this->borrowings->contains($borrowing)) {
+            $this->borrowings[] = $borrowing;
+            $borrowing->setRecord($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrowing(Borrowing $borrowing): self
+    {
+        if ($this->borrowings->contains($borrowing)) {
+            $this->borrowings->removeElement($borrowing);
+            // set the owning side to null (unless already changed)
+            if ($borrowing->getRecord() === $this) {
+                $borrowing->setRecord(null);
+            }
         }
 
         return $this;

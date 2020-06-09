@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block body %}
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
 
     <h1>{{'title_category_view'|trans({'%name%': category.name|default('')}) }}</h1>
     {% if category is defined and category|length %}
@@ -18,6 +21,9 @@
             <dt>Records</dt>
             {% for records in category.records %}
              <dd>{{ records.title }}</dd>
+                <a href="{{ url('record_show', {id: records.id}) }}">
+                    View record
+                </a>
             {% endfor %}
         <dt> {{ 'label_actions'|trans }}</dt>
         <dd>
@@ -29,4 +35,7 @@
     {% else %}
         No category!
     {% endif %}
+    </div>
+    </div>
+    </div>
 {% endblock %}

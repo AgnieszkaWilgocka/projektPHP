@@ -9,6 +9,9 @@ View record
 {% endblock %}
 
 {% block body %}
+<div class="container">
+    <div class="card border-0 shadow my-5">
+        <div class="card-body p-5">
 <h1>Record detail</h1>
 
     {% if record is defined and record|length %}
@@ -32,4 +35,7 @@ View record
         {% else %}
             No record!
      {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
