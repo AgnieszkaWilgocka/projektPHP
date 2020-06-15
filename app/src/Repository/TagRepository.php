@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Tag repository
+ */
 namespace App\Repository;
 
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,15 +18,61 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TagRepository extends ServiceEntityRepository
 {
+
+    const PAGINATOR_ITEM_PER_PAGE = 10;
+
+    /**
+     * TagRepository constructor.
+     * @param \Doctrine\Persistence\ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
     }
 
+
+    /**
+     * @param \App\Entity\Tag $tag Tag entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function save(Tag $tag)
     {
         $this->_em->persist($tag);
         $this->_em->flush($tag);
+    }
+
+
+    /**
+     * @param \App\Entity\Tag $tag Tag entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Tag $tag)
+    {
+        $this->_em->remove($tag);
+        $this->_em->flush($tag);
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+    */
+    public function queryAll(): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder();
+    }
+
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    public function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?? $this->createQueryBuilder('tag');
     }
 
     // /**

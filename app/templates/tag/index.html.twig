@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+All tags
+{% endblock %}
+
+{% block body %}
+<h1>Tags</h1>
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
+
+    {% if pagination is defined and pagination.items|length %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> {{ knp_pagination_sortable(pagination,  'label_title'|trans, 'tag.title') }} </th>
+                <th> {{ 'label_actions'|trans }} </th>
+            </tr>
+        </thead>
+    <tbody>
+    {% for tag in pagination.items %}
+    <tr>
+        <td>{{ tag.title }}</td>
+        <td>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action_edit'|trans }}">
+                {{ 'action_edit'|trans }}
+            </a>
+            <a href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action_delete'|trans }}">
+                {{ 'action_delete'|trans }}
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {% endif %}
+    </div>
+    </div>
+    </div>
+{% endblock %}

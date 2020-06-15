@@ -17,6 +17,13 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
             <a href="#" class="nav-item nav-link active">Home</a>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ url('user_index') }}" class="nav-item nav-link active">Manage accounts</a>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                <a href="#" class="nav-item nav-link active">My borrowings</a>
+            {% endif %}
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categories
@@ -24,7 +31,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{{ url('category_index') }}">All categories</a>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a class="dropdown-item" href="{{ url('category_create') }}">Create category</a>
+                        <a class="dropdown-item" href="{{ url('category_create') }}">Create category</a>
                     {% endif %}
                 </div>
             </li>
@@ -39,17 +46,26 @@
                     {% endif %}
                 </div>
             </li>
-            {% if is_granted('ROLE_USER') %}
-            <a href="#" class="nav-item nav-link disabled" tabindex="-1">My borrowings</a>
-            {% endif %}
+            <li class="nav-item dropdown">
+                {% if is_granted('ROLE_ADMIN') %}
+                <a class="nav-link dropdown-toggle" href="{{ url('tag_index') }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tags
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{{ url('tag_index') }}">All tags</a>
+                        <a class="dropdown-item" href="{{ url('tag_create') }}">Create tag</a>
+                    {% endif %}
+                </div>
+            </li>
         </div>
         <div class="navbar-nav ml-auto">
-            <a href="{{ url('app_login') }}" class="btn btn-outline-success">Login</a>
-            <a href="{{ url('app_register') }}" class="nav-item nav-link">Sign up</a>
+            <a href="{{ url('app_login') }}" class="btn btn-outline-success">{{'action_login'|trans}}</a>
+            <a href="{{ url('app_register') }}" class="nav-item nav-link">{{ 'action_sign_up'|trans }}</a>
             {% if is_granted('ROLE_USER') %}
-            <a href="{{ url('app_logout') }}" class="nav-item nav-link">Logout</a>
+            <a href="{{ url('app_logout') }}" class="nav-item nav-link">{{ 'action_logout'|trans }}</a>
             {% endif %}
             <a href="{{ url('borrowing_create') }}" class="nav-item nav-link">Make borrowing</a>
+            <a href="{{ url('borrowing_create') }}" class="nav-item nav-link">My account</a>
             {% if is_granted ('IS_AUTHENTICATED_REMEMBERED') %}
             <div>{{ app.user.email }}</div>
             {% endif %}
