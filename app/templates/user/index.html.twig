@@ -24,16 +24,18 @@ Users
 
     <tr>
     <td>{{ user.email }}</td>
-
     <td>
-        {% for usersData in user.usersData %}
-    <a href="{{ url('user_edit', {id: user.id, id_data: usersData.id}) }}" title="Edit">
-        Edit
+    <a href="{{ url('change_password', {'id': user.id}) }}" title="Edit_password">
+        Edit_password
     </a>
+        {% for usersData in user.usersData %}
+        <a href="{{ url('change_data', {'id': user.id, 'id_data': user.usersData}) }}" title="Edit_data">
+            Edit_data
 
+        </a>
+        {% endfor %}
     </td>
     </tr>
-{% endfor %}
     {% endfor %}
     </tbody>
     </table>
