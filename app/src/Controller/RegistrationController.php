@@ -7,6 +7,8 @@ namespace App\Controller;
 
 use App\Form\RegistrationType;
 use App\Entity\User;
+use App\Entity\UserData;
+use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +21,11 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 class RegistrationController extends AbstractController
 {
     /**
+
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserRepository               $userRepository
+     * @param UserDataRepository           $userDataRepository
      * @param GuardAuthenticatorHandler    $authenticatorHandler
      * @param LoginFormAuthenticator       $formAuthenticator
      *
@@ -32,12 +36,16 @@ class RegistrationController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="app_register",
      * )
-      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, GuardAuthenticatorHandler $authenticatorHandler, LoginFormAuthenticator $formAuthenticator): Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, UserDataRepository $userDataRepository, GuardAuthenticatorHandler $authenticatorHandler, LoginFormAuthenticator $formAuthenticator): Response
     {
         $user = new User();
+        $userData = new UserData();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
+
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,6 +57,9 @@ class RegistrationController extends AbstractController
             );
             $user->setRoles([User::ROLE_USER]);
             $userRepository->save($user);
+            $userDataRepository->save($userData);
+            dump($userData);
+
             $this->addFlash('success', 'Your account has been created successfully');
 
             return $authenticatorHandler->authenticateUserAndHandleSuccess(

@@ -5,13 +5,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserFixtures
  */
-class UserFixtures extends AbstractBaseFixtures
+class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
 
     /**
@@ -36,7 +37,7 @@ class UserFixtures extends AbstractBaseFixtures
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(5, 'users', function ($i) {
+        $this->createMany(10, 'users', function ($i) {
 
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
@@ -47,6 +48,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'user123'
                 )
             );
+            $user->setUsersData($this->getReference('usersData_'.$i));
 
             return $user;
         });
@@ -66,6 +68,14 @@ class UserFixtures extends AbstractBaseFixtures
         });
 
         $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return [UserDataFixtures::class];
     }
 
 

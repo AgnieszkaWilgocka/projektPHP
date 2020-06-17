@@ -8,6 +8,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +19,7 @@ class RegistrationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -29,14 +30,25 @@ class RegistrationType extends AbstractType
                 'required' => true,
             ]
         );
+        $builder->add(
+            'usersData',
+            UserDataType::class
+        );
 
         $builder->add(
             'password',
-            PasswordType::class,
+            RepeatedType::class,
             [
+                'type' => PasswordType::class,
+                'first_options' => array('label' => 'Password'),
+                'second_options' => array('label' => 'Repeat password'),
                 'required' => true,
             ]
         );
+
+
+
+
     }
 
 
