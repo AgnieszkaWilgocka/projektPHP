@@ -1,8 +1,5 @@
 <?php
 
-/**
- * UserData entity
- */
 namespace App\Entity;
 
 use App\Repository\UserDataRepository;
@@ -10,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UserDataRepository::class)
- * @ORM\Table(name="usersData")
+ * @ORM\Table(name="users_data")
  */
 class UserData
 {
@@ -22,38 +19,25 @@ class UserData
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=45, nullable=true)
      */
-    private $login;
+    private $nick;
 
 
-
-    /**
-     * Getter for id
-     *
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLogin(): ?string
+    public function getNick(): ?string
     {
-        return $this->login;
+        return $this->nick;
     }
 
-    /**
-     * @param string $login
-     */
-    public function setLogin(string $login): void
+    public function setNick(string $nick): void
     {
-        $this->login = $login;
+        $this->nick = $nick;
     }
-
 
 
 }

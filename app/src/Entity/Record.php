@@ -43,6 +43,11 @@ class Record
     private $borrowings;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $amount;
+
+    /**
      * Record constructor.
      */
     public function __construct()
@@ -158,5 +163,15 @@ class Record
         }
 
         return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(?int $amount): void
+    {
+        $this->amount = $amount;
     }
 }

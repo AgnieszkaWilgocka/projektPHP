@@ -6,25 +6,85 @@
                 <source>action_back_to_list</source>
                 <target>Powrót</target>
             </trans-unit>
+            <trans-unit id="action_borrowing">
+                <source>action_borrowing</source>
+                <target>Wypożycz</target>
+            </trans-unit>
+            <trans-unit id="action_create">
+                <source>action_create</source>
+                <target>Utwórz</target>
+            </trans-unit>
+            <trans-unit id="action_delete">
+                <source>action_delete</source>
+                <target>Usuń</target>
+            </trans-unit>
+            <trans-unit id="action_edit">
+                <source>action_edit</source>
+                <target>Edytuj</target>
+            </trans-unit>
+            <trans-unit id="action_logout">
+                <source>action_logout</source>
+                <target>Wyloguj</target>
+            </trans-unit>
+            <trans-unit id="action_login">
+                <source>action_login</source>
+                <target>Zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="action_sign_up">
+                <source>action_sign_up</source>
+                <target>Zarejestruj się</target>
+            </trans-unit>
             <trans-unit id="action_view">
                 <source>action_view</source>
                 <target>Podgląd</target>
+            </trans-unit>
+            <trans-unit id="label_account">
+                <source>label_account</source>
+                <target>Moje konto</target>
             </trans-unit>
             <trans-unit id="label_actions">
                 <source>label_actions</source>
                 <target>Akcje</target>
             </trans-unit>
+            <trans-unit id="label_borrowing">
+                <source>label_borrowing</source>
+                <target>Wypożyczenie</target>
+            </trans-unit>
             <trans-unit id="label_name">
                 <source>label_name</source>
                 <target>Nazwa</target>
+            </trans-unit>
+            <trans-unit id="label_my_borrowings">
+                <source>label_my_borrowings</source>
+                <target>Moje wypożyczenia</target>
+            </trans-unit>
+            <trans-unit id="label_tags">
+                <source>label_tags</source>
+                <target>Tagi</target>
             </trans-unit>
             <trans-unit id="label_records">
                 <source>label_records</source>
                 <target>Płyty</target>
             </trans-unit>
+            <trans-unit id="label_registration">
+                <source>label_registration</source>
+                <target>Rejestracja</target>
+            </trans-unit>
+            <trans-unit id="manage_accounts">
+                <source>manage_accounts</source>
+                <target>Zarządzaj kontami</target>
+            </trans-unit>
+            <trans-unit id="manage_order">
+                <source>manage_order</source>
+                <target>Zarządzanie wypożyczeniem</target>
+            </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
                 <target>Pusta lista.</target>
+            </trans-unit>
+            <trans-unit id="record_view">
+                <source>record_view</source>
+                <target>Zobacz płytę</target>
             </trans-unit>
             <trans-unit id="title_category_list">
                 <source>title_category_list</source>
@@ -32,7 +92,11 @@
             </trans-unit>
             <trans-unit id="title_category_view">
                 <source>title_category_view</source>
-                <target>Podgląd kategorii</target>
+                <target>Podgląd kategorii #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_record_view">
+                <source>title_record_view</source>
+                <target>Podgląd płyty #%id%</target>
             </trans-unit>
         </body>
     </file>

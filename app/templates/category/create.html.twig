@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Create category
+{{'action_create'|trans}}
 {% endblock %}
 
 {% block body %}
-<h1>Create category</h1>
+<h1>{{'action_create'|trans}}</h1>
 
     {{ form_start(form,  {method: 'POST', action: url('category_create')}) }}
     {{ form_widget(form) }}

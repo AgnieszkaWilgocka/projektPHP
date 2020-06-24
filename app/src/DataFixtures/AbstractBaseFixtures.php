@@ -87,6 +87,7 @@ abstract class AbstractBaseFixtures extends Fixture
         }
     }
 
+
     /**
      * Set random reference to the object.
      *

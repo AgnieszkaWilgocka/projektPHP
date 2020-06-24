@@ -1,14 +1,11 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}
-Delete tag
+{{'action_delete'|trans}}
 {% endblock %}
 
-
 {% block body %}
-<h1>Delete tag</h1>
-
+<h1>{{'action_delete'|trans}}</h1>
 
     {{ form_start(form, {method: 'DELETE', action: url('tag_delete', {'id': tag.id}) }) }}
     {{ form_widget(form) }}
@@ -20,9 +17,6 @@ Delete tag
     <a href="{{ url('tag_index') }}" title="{{ 'action_back_to_list'|trans }}">
         {{ 'action_back_to_list'|trans }}
     </a>
-
-
-
 
 {{ form_end(form) }}
 {% endblock %}

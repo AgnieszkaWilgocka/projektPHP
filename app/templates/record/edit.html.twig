@@ -2,11 +2,11 @@
 
 
 {% block title %}
-Edit record
+{{{'action_edit'|trans}}}
 {% endblock %}
 
 {% block body %}
-<h1>Edit record</h1>
+<h1>{{'action_edit'|trans}}</h1>
 
     {{ form_start(form, {method: 'PUT', action: url('record_edit', {id: record.id}) }) }}
     {{ form_widget(form) }}

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Records
+{{'label_records'|trans}}
 {% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -19,8 +19,8 @@ Records
         <thead>
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'record.title') }}</th>
-                <th>Category</th>
-                <th>Actions</th>
+                <th>{{'title_category_list'|trans}}</th>
+                <th>{{'label_actions'|trans}}</th>
             </tr>
         </thead>
         <tbody>
@@ -33,13 +33,13 @@ Records
                         {{ 'action_view'|trans }}
                     </a>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ url('record_edit', {'id': record.id}) }}" title="'Edit">
-                        Edit
+                    <a href="{{ url('record_edit', {'id': record.id}) }}" title="{{'action_edit'|trans}}">
+                        {{'action_edit'|trans}}
                     </a>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ url('record_delete', {'id': record.id}) }}" title="Delete">
-                        Delete
+                    <a href="{{ url('record_delete', {'id': record.id}) }}" title="{{'action_delete'|trans}}">
+                        {{'action_delete'|trans}}
                     </a>
                     {% endif %}
                 </td>
@@ -50,8 +50,11 @@ Records
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
+    </div>
+        {% else %}
+            {{ 'message_empty_list'|trans }}
+        {% endif %}
 
-    {% endif %}
     </div>
     </div>
     </div>

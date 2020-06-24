@@ -43,6 +43,9 @@ class Category
      */
     private $records;
 
+    /**
+     * Category constructor.
+     */
     public function __construct()
     {
         $this->records = new ArrayCollection();

@@ -5,7 +5,6 @@
  */
 namespace App\DataFixtures;
 
-
 use App\Entity\UserData;
 use Doctrine\Persistence\ObjectManager;
 
@@ -19,19 +18,18 @@ class UserDataFixtures extends AbstractBaseFixtures
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(10, 'usersData', function ($i) {
+        $this->createMany(5, 'usersData', function ($i) {
             $userData = new UserData();
-            $userData->setLogin($this->faker->name);
+            $userData->setNick($this->faker->name);
+
+            return $userData;
+        });
+        $this->createMany(5, 'usersDataAdmin', function ($i) {
+            $userData = new UserData();
+            $userData->setNick($this->faker->name);
 
             return $userData;
         });
         $manager->flush();
     }
-
-
-    /**
-     * @return array
-     */
-
-
 }

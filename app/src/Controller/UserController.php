@@ -7,8 +7,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserData;
-use App\Form\ChangeDataType;
+
 use App\Form\PasswordType;
+use App\Form\UpgradePasswordType;
 use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -26,12 +27,30 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-
+    /**
+     * @param User $user
+     *
+     * @return Response
+     *
+     * @Route(
+     *     "/{id}",
+     *     methods={"GET"},
+     *     name="user_show",
+     *     requirements={"id": "[1-9]\d*"}
+     * )
+     */
+    public function show(User $user): Response
+    {
+        return $this->render(
+            'user/show.html.twig',
+            ['user' => $user]
+        );
+    }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
-     * @param \App\Repository\UserRepository            $userRepository User repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
+     * @param \App\Repository\UserRepository $userRepository User repository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -53,10 +72,11 @@ class UserController extends AbstractController
         return $this->render(
             'user/index.html.twig',
             [
-                'pagination' => $pagination
+                'pagination' => $pagination,
             ]
         );
     }
+
 
     /**
      * @param Request $request
@@ -67,7 +87,7 @@ class UserController extends AbstractController
      * @return Response
      *
      * @Route(
-     *     "/{id}/change_password",
+     *     "/change_password/{id}",
      *     methods={"GET", "PUT"},
      *     name="change_password",
      *     requirements={"id" : "[1-9]\d*"},
@@ -75,7 +95,7 @@ class UserController extends AbstractController
      */
     public function changePassword(Request $request, User $user, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $form = $this->createForm(PasswordType::class, $user, ['method' => 'PUT']);
+        $form = $this->createForm(UpgradePasswordType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -89,56 +109,11 @@ class UserController extends AbstractController
             $userRepository->save($user);
             $this->addFlash('success', 'password changed successfully');
 
-            return $this->redirectToRoute('user_index');
-        }
-
-        return $this->render(
-            'user/change_password.html.twig',
-            [
-                'form' => $form->createView(),
-                'user' => $user,
-            ]
-        );
-    }
-
-
-    /**
-     * @param Request $request
-     * @param User $user
-     * @param UserData $userData
-     * @param UserRepository $userRepository
-     * @param UserDataRepository $userDataRepository
-     *
-     * @return Response
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     *
-     * @Route(
-     *     "/{id}/{id_data}/change_data",
-     *     methods={"GET", "PUT"},
-     *     name="change_data",
-     *     requirements={"id": "[1-9]\d*", "id_data": "[1-9]\d*"}
-     * )
-     */
-    public function changeData(Request $request, User $user, UserData $userData, UserRepository $userRepository, UserDataRepository $userDataRepository): Response
-    {
-        $form = $this->createForm(ChangeDataType::class, $user, ['method' => 'PUT']);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($user);
-            $userDataRepository->save($userData);
-
-
-            $this->addFlash('success', 'data updated successfully');
-
             return $this->redirectToRoute('category_index');
         }
 
         return $this->render(
-            'user/change_data.html.twig',
+            'user/change_password.html.twig',
             [
                 'form' => $form->createView(),
                 'user' => $user,

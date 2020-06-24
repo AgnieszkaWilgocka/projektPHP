@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Borrowing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BorrowingRepository extends ServiceEntityRepository
 {
+    const PAGINATOR_ITEMS_PER_PAGE = 5;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Borrowing::class);
@@ -25,6 +28,25 @@ class BorrowingRepository extends ServiceEntityRepository
         $this->_em->flush($borrowing);
     }
 
+    public function delete(Borrowing $borrowing)
+    {
+        $this->_em->remove($borrowing);
+        $this->_em->flush($borrowing);
+    }
+
+    public function queryAll()
+    {
+        return $this->getOrCreateQueryBuilder()
+        ->orderBy('borrowing.createdAt', 'DESC');
+    }
+
+
+    public function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+
+        return $queryBuilder ?? $this->createQueryBuilder('borrowing');
+
+    }
     // /**
     //  * @return Borrowing[] Returns an array of Borrowing objects
     //  */

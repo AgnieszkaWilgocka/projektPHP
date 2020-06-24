@@ -1,28 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Registration
+{{ 'label_registration'|trans }}
 {% endblock %}
-
 
 {% block body %}
     <div class="container">
     <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
-<h1>Registration</h1>
+<h1>{{'label_registration'|trans}}</h1>
 
     {{ form_start(form, {method: 'POST', action: url('app_register')}) }}
     {{ form_widget(form) }}
 
     <div class="form-group row float-sm-right">
-        <input type="submit" value="sign-up" class="btn btn-outline-success" >
+        <input type="submit" value="{{'action_sign_up'|trans}}" class="btn btn-outline-success" >
     </div>
 
     {{ form_end(form) }}
     </div>
     </div>
     </div>
-
-
 
 {% endblock %}

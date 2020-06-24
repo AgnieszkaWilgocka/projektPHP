@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}
-Creating tag
+{{'action_create'|trans}}
 {% endblock %}
 
 {% block body %}
-<h1>Creating tag</h1>
+<h1>{{'action_create'|trans}}</h1>
 
 {{ form_start(form, {method: 'POST', action: url("tag_create")}) }}
     {{ form_widget(form) }}

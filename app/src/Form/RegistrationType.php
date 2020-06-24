@@ -30,10 +30,10 @@ class RegistrationType extends AbstractType
                 'required' => true,
             ]
         );
-        $builder->add(
-            'usersData',
-            UserDataType::class
-        );
+        //$builder->add(
+            //'usersData',
+           // UserDataType::class
+
 
         $builder->add(
             'password',
@@ -45,10 +45,6 @@ class RegistrationType extends AbstractType
                 'required' => true,
             ]
         );
-
-
-
-
     }
 
 

@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}
-All tags
+{{'label_tags'|trans}}
 {% endblock %}
 
 {% block body %}
-<h1>Tags</h1>
+<h1>{{'label_tags'|trans}}</h1>
     <div class="container">
     <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
@@ -41,6 +40,8 @@ All tags
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
     </div>
+    {% else %}
+        {{ 'message_empty_list'|trans }}
     {% endif %}
     </div>
     </div>

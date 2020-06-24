@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Delete record
+{{'action_delete'|trans}}
 {% endblock %}
 
 {% block body %}
-<h1>Delete record</h1>
+<h1>{{'action_delete'|trans}}</h1>
 
-    {{ form_start(form, {method: 'DELETE', action: url('record_delete', {id: record.id}) }) }}
+    {{ form_start(form, {method: 'DELETE', action: url('record_delete', {'id': record.id}) }) }}
     {{ form_widget(form) }}
 
     <div class="form-group row float-sm-right">

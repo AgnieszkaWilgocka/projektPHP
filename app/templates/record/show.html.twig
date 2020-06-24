@@ -12,7 +12,7 @@ View record
 <div class="container">
     <div class="card border-0 shadow my-5">
         <div class="card-body p-5">
-<h1>Record detail</h1>
+            <h1>{{'title_record_view'|trans({'%id%': record.title|default('')}) }}</h1>
 
     {% if record is defined and record|length %}
 
@@ -23,9 +23,9 @@ View record
         <dd>{{ record.category.name }}</dd>
         <dt>Tags</dt>
         {% for tags in record.tags %}
-        <dd>{{ tags.title }}</dd>
+            <dd><a href="{{ url('tag_searching', {id: tags.id}) }}">{{ tags.title }}</a></dd>
         {% endfor %}
-        <dt>Actions</dt>
+        <dt>{{'label_actions'|trans}}</dt>
         <dd>
             <a href="{{ url('record_index') }}" title="{{ 'action_back_to_list'|trans }}">
                 {{ 'action_back_to_list'|trans }}
@@ -33,7 +33,7 @@ View record
         </dd>
     </dl>
         {% else %}
-            No record!
+            {{'message_empty_list'|trans}}
      {% endif %}
         </div>
     </div>

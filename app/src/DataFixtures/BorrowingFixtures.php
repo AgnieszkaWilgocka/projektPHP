@@ -21,6 +21,9 @@ class BorrowingFixtures extends AbstractBaseFixtures implements DependentFixture
         $this->createMany(5, 'borrowings', function ($i) {
             $borrowing = new Borrowing();
             $borrowing->setRecord($this->getRandomReference('records'));
+            $borrowing->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1day'));
+            $borrowing->setComment($this->faker->sentence);
+            $borrowing->setIsExecuted(false);
 
             return $borrowing;
         });

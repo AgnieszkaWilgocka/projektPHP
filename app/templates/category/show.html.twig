@@ -13,16 +13,16 @@
     <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
 
-    <h1>{{'title_category_view'|trans({'%name%': category.name|default('')}) }}</h1>
+    <h1>{{'title_category_view'|trans({'%id%': category.name|default('')}) }}</h1>
     {% if category is defined and category|length %}
         <dl>
             <dt>{{ 'label_name'|trans }}</dt>
             <dd>{{ category.name }}</dd>
-            <dt>Records</dt>
+            <dt>{{'label_records'|trans}}</dt>
             {% for records in category.records %}
              <dd>{{ records.title }}</dd>
                 <a href="{{ url('record_show', {id: records.id}) }}">
-                    View record
+                    {{'record_view'|trans}}
                 </a>
             {% endfor %}
         <dt> {{ 'label_actions'|trans }}</dt>
@@ -33,7 +33,7 @@
         </dd>
         </dl>
     {% else %}
-        No category!
+        {{'message_empty_list'|trans}}
     {% endif %}
     </div>
     </div>

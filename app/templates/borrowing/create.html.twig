@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Borrowing
+{{'label_borrowing'|trans}}
 {% endblock %}
 
 
@@ -9,9 +9,9 @@ Borrowing
     <div class="container">
     <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
-<h1>Borrowing</h1>
+<h1>{{'label_borrowing'|trans}}</h1>
 
-    {{ form_start(form, {methos: 'PUT', action: url('borrowing_create')}) }}
+    {{ form_start(form, {method: 'POST', action: url('borrowing_create')}) }}
     {{ form_widget(form) }}
 
 

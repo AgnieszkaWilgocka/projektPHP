@@ -54,6 +54,26 @@ class TagController extends AbstractController
         );
     }
 
+    /**
+     * @param Tag $tag
+     *
+     * @return Response
+     *
+     * @Route(
+     *      "/{id}",
+     *     methods={"GET"},
+     *     name="tag_searching",
+     *     requirements={"id": "[1-9]\d*"}
+     * )
+     */
+    public function tagSearching(Tag $tag): Response
+    {
+        return $this->render(
+            'tag/show.html.twig',
+            ['tag' => $tag]
+        );
+    }
+
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request       HTTP Request

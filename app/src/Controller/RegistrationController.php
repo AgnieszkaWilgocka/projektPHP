@@ -18,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
+/**
+ * Class RegistrationController
+ */
 class RegistrationController extends AbstractController
 {
     /**
@@ -55,10 +58,11 @@ class RegistrationController extends AbstractController
                     $user->getPassword()
                 )
             );
+            $user->setUserData($userData);
             $user->setRoles([User::ROLE_USER]);
             $userRepository->save($user);
             $userDataRepository->save($userData);
-            dump($userData);
+
 
             $this->addFlash('success', 'Your account has been created successfully');
 
@@ -73,7 +77,8 @@ class RegistrationController extends AbstractController
         return $this->render(
             'registration/register.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'user' => $user
             ]
         );
     }

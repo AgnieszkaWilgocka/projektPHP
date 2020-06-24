@@ -1,0 +1,41 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    My account
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
+<h1>My account</h1>
+{% if user is defined and user|length %}
+    <dl>
+        <dt>Email</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>Nick</dt>
+        <dd>{{ user.userData.nick }}</dd>
+
+        <dd>
+            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+
+          <a href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="{{'action_change_nick'|trans}}">
+                {{'action_change_nick'|trans}}
+            </a>
+            <a href="{{ url('change_password', {id: user.id}) }}" title="{{'action_change_password'|trans}}">
+                {{'action_change_password'|trans}}
+            </a>
+        </dd>
+    </dl>
+{% else %}
+    {{'message_empty_list'|trans}}
+{% endif %}
+    </div>
+    </div>
+    </div>
+{% endblock %}

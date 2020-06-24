@@ -63,9 +63,9 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=UserData::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $usersData;
+    private $userData;
+
 
 
 
@@ -177,19 +177,14 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return userData|null
-     */
-    public function getUsersData(): ?UserData
+    public function getUserData(): ?UserData
     {
-        return $this->usersData;
+        return $this->userData;
     }
 
-    /**
-     * @param userData|null $usersData
-     */
-    public function setUsersData(?UserData $usersData): void
+    public function setUserData(?UserData $userData): void
     {
-        $this->usersData = $usersData;
+        $this->userData = $userData;
     }
+
 }

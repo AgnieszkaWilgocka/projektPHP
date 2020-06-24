@@ -22,6 +22,15 @@ class RecordFixtures extends AbstractBaseFixtures implements DependentFixtureInt
             $record = new Record();
             $record->setTitle($this->faker->colorName);
             $record->setCategory($this->getRandomReference('categories'));
+            $record->setAmount(5);
+            $tags = $this->getRandomReferences(
+                'tags',
+                $this->faker->numberBetween(1, 3)
+            );
+
+            foreach ($tags as $tag) {
+                $record->addTag($tag);
+            }
 
             return $record;
         });
@@ -33,6 +42,6 @@ class RecordFixtures extends AbstractBaseFixtures implements DependentFixtureInt
      */
     public function getDependencies()
     {
-        return [CategoryFixtures::class];
+        return [CategoryFixtures::class, TagFixtures::class];
     }
 }

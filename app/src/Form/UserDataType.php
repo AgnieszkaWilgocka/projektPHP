@@ -23,20 +23,27 @@ class UserDataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
-            'login',
+            'nick',
             TextType::class,
             [
+                'label' => 'label_nick',
                 'required' => true,
                 'attr' => ['max length' => 45],
             ]
         );
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => UserData::class]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'userData';

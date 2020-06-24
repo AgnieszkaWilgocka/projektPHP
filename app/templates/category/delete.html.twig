@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Delete category
+{{'action_delete'|trans}}
 {% endblock %}
 
 {% block body %}
-<h1>Delete category</h1>
+<h1>{{'action_delete'|trans}}</h1>
 
     {{ form_start(form, {method: 'DELETE', action: url('category_delete', {'id': category.id}) }) }}
     {{ form_widget(form) }}

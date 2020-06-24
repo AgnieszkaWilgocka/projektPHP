@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_category_view'|trans }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-5">
+
+                <h1>Tag details</h1>
+                {% if tag is defined and tag|length %}
+                    <dl>
+                        <dt>{{ 'label_title'|trans }}</dt>
+                        <dd>{{ tag.title }}</dd>
+                        <dt>Records</dt>
+                        {% for records in tag.records %}
+                            <dd>{{ records.title }}</dd>
+                        {% endfor %}
+                        <dt> {{ 'label_actions'|trans }}</dt>
+                        <dd>
+                            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                                {{ 'action_back_to_list'|trans }}
+                            </a>
+                        </dd>
+                    </dl>
+                {% else %}
+                    {{ 'message_empty_list'|trans }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

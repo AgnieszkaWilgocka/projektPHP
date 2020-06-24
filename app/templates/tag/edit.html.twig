@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}
-Edit
+{{'action_edit'|trans}}
 {% endblock %}
 
 
 {% block body %}
-    <h1>Editing tag</h1>
+    <h1>{{'action_edit'|trans}}</h1>
     {{ form_start(form, {method: 'PUT', action: url('tag_edit', {'id': tag.id}) }) }}
     {{ form_widget(form) }}
 

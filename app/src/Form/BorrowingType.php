@@ -7,6 +7,7 @@ namespace App\Form;
 use App\Entity\Record;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,7 +32,15 @@ class BorrowingType extends AbstractType
                 },
                 'label' => 'label_records',
                 'required' => true,
-                'placeholder'=> 'choice_record',
+                'placeholder' => 'choice_record',
+            ]
+        );
+        $builder->add(
+            'comment',
+            TextType::class,
+            [
+                'label' => 'label_comment',
+                'attr' => ['max_length' => 50],
             ]
         );
     }
