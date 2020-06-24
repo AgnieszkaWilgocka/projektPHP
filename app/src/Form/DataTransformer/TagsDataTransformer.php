@@ -22,7 +22,8 @@ class TagsDataTransformer implements DataTransformerInterface
 
     public function transform($tags): string
     {
-        if ($tags == null){
+        if (null == $tags) {
+
             return '';
         }
 
@@ -32,7 +33,7 @@ class TagsDataTransformer implements DataTransformerInterface
             $tagTitles[] = $tag->getTitle();
         }
 
-        return implode('', $tagTitles);
+        return implode(',', $tagTitles);
     }
 
     public function reverseTransform($value)

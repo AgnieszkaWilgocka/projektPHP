@@ -20,15 +20,19 @@
         <dd>{{ user.userData.nick }}</dd>
 
         <dd>
-            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
-                {{ 'action_back_to_list'|trans }}
-            </a>
-
           <a href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="{{'action_change_nick'|trans}}">
                 {{'action_change_nick'|trans}}
             </a>
             <a href="{{ url('change_password', {id: user.id}) }}" title="{{'action_change_password'|trans}}">
                 {{'action_change_password'|trans}}
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ url('manage_borrowing', {id: app.user.id}) }}" title="{{'manage_borrowings'}}">
+                {{ 'manage_borrowings'|trans }}
+            </a>
+            {% endif %}
+            <a href="{{ url('my_borrowing', {id: app.user.id}) }}" title="Moje wypozyczenia">
+                Moje wypozyczenia
             </a>
         </dd>
     </dl>

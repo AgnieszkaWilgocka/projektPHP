@@ -38,6 +38,12 @@ class Borrowing
      */
     private $isExecuted;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
 
 
 
@@ -86,6 +92,16 @@ class Borrowing
     public function setIsExecuted(?bool $isExecuted): void
     {
         $this->isExecuted = $isExecuted;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): void
+    {
+        $this->author = $author;
     }
 
 

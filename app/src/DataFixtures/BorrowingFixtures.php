@@ -24,6 +24,7 @@ class BorrowingFixtures extends AbstractBaseFixtures implements DependentFixture
             $borrowing->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1day'));
             $borrowing->setComment($this->faker->sentence);
             $borrowing->setIsExecuted(false);
+            $borrowing->setAuthor($this->getRandomReference('users'));
 
             return $borrowing;
         });
@@ -36,6 +37,6 @@ class BorrowingFixtures extends AbstractBaseFixtures implements DependentFixture
      */
     public function getDependencies(): array
     {
-        return [RecordFixtures::class];
+        return [RecordFixtures::class, UserFixtures::class];
     }
 }

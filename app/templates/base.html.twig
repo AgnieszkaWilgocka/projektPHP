@@ -18,13 +18,16 @@
         <div class="navbar-nav">
             <a href="#" class="nav-item nav-link active">Home</a>
             {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ url('user_index') }}" class="nav-item nav-link active">{{'manage_accounts'|trans}}</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ 'manage'|trans }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{{ url('manage_borrowing') }}">{{ 'manage_borrowings'|trans }}</a>
+                    <a class="dropdown-item" href="{{ url('user_index') }}">{{'manage_accounts'|trans}}</a>
+                </div>
+            </li>
             {% endif %}
-            {% if is_granted('ROLE_USER') %}
-                <a href="#" class="nav-item nav-link active">{{'label_my_borrowings'|trans}}</a>
-                <a href="{{ url('manage_borrowings') }}" class="nav-item nav-link active">{{'manage_borrowings'|trans}}</a>
-            {% endif %}
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ 'title_category_list'|trans }}

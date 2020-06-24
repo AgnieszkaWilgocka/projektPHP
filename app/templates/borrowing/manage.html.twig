@@ -30,12 +30,16 @@ Manage borrowings
                     <td>{{ borrowing.record.title }}</td>
                     <td> {{ borrowing.createdAt|date('Y/m/d') }} </td>
                     <td>
-                <a href="{{ url('borrowing_accept', {id: borrowing.id}) }}" title="Accept">
-                    Accept
-                </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                         <a href="{{ url('borrowing_accept', {id: borrowing.id}) }}" title="Accept">
+                            Accept
+                        </a>
+                            {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ url('borrowing_decline', {id: borrowing.id}) }}" title="Decline">
                             Decline
                         </a>
+                            {% endif %}
                     </td>
                 </tr>
             {% endif %}

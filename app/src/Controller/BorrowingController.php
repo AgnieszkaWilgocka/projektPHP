@@ -6,17 +6,18 @@
 namespace App\Controller;
 
 use App\Entity\Borrowing;
-use App\Entity\BorrowingStatus;
+use App\Entity\User;
 use App\Form\BorrowingType;
 use App\Repository\BorrowingRepository;
-use App\Repository\BorrowingStatusRepository;
 use App\Repository\RecordRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class BorrowingController
@@ -26,18 +27,24 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BorrowingController extends AbstractController
 {
+
+
     /**
+     * /**
      * @param Request $request
      * @param BorrowingRepository $borrowingRepository
      * @param PaginatorInterface $paginator
+     * @param Security $security
      *
      * @return Response
      *
      * @Route(
      *     "/manage",
-     *     name="manage_borrowings",
+     *     name="manage_borrowing",
      *     methods={"GET", "POST"},
+     *
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function manageBorrowing(Request $request, BorrowingRepository $borrowingRepository, PaginatorInterface $paginator): Response
     {
@@ -48,8 +55,38 @@ class BorrowingController extends AbstractController
             BorrowingRepository::PAGINATOR_ITEMS_PER_PAGE
         );
 
+
         return $this->render(
             'borrowing/manage.html.twig',
+            ['pagination' => $pagination]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param BorrowingRepository $borrowingRepository
+     * @param PaginatorInterface $paginator
+     *
+     * @return Response
+     *
+     * @Route(
+     *     "/{id}/my_borrowing",
+     *     methods={"GET", "POST"},
+     *     name="my_borrowing",
+     *     requirements={"id" : "[1-9]\d*"}
+     * )
+     */
+    public function myBorrowing(Request $request, BorrowingRepository $borrowingRepository, PaginatorInterface $paginator, User $user)
+    {
+        $page = $request->query->getInt('page', '1');
+        $pagination = $paginator->paginate(
+            $borrowingRepository->queryByAuthor($user),
+            $page,
+            BorrowingRepository::PAGINATOR_ITEMS_PER_PAGE
+        );
+
+        return $this->render(
+            'borrowing/own.html.twig',
             ['pagination' => $pagination]
         );
     }
@@ -84,6 +121,7 @@ class BorrowingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $record = $form->get('record')->getData();
             $record->setAmount($record->getAmount()-1);
+            $borrowing->setAuthor($this->getUser());
             $borrowing->setCreatedAt(new \DateTime());
             $borrowing->setIsExecuted(false);
             $recordRepository->save($record);
@@ -120,7 +158,7 @@ class BorrowingController extends AbstractController
      */
     public function accept(Request $request, Borrowing $borrowing, BorrowingRepository $borrowingRepository): Response
     {
-        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'PUT']);
+        $form = $this->createForm(FormType::class, $borrowing, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -129,7 +167,7 @@ class BorrowingController extends AbstractController
 
             $this->addFlash('success', 'order has been accepted');
 
-            return $this->redirectToRoute('manage_borrowings');
+            return $this->redirectToRoute('manage_borrowing');
         }
 
         return $this->render(
@@ -168,12 +206,12 @@ class BorrowingController extends AbstractController
             $borrowing->setIsExecuted(true);
             $record = $form->get('record')->getData();
             $record->setAmount($record->getAmount()+1);
-            $borrowingRepository->save($borrowing);
             $recordRepository->save($record);
+            $borrowingRepository->delete($borrowing);
 
             $this->addFlash('success', 'borrowing has been declined');
 
-            return $this->redirectToRoute('manage_borrowings');
+            return $this->redirectToRoute('category_index');
         }
 
         return $this->render(
@@ -230,6 +268,5 @@ class BorrowingController extends AbstractController
                 'borrowing' => $borrowing,
             ]
         );
-
     }
 }

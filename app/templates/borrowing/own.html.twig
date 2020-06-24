@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+my borrowing
+{% endblock %}
+
+{% block body %}
+<h1> My borrowing </h1>
+
+{% if pagination is defined and pagination.items|length %}
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th>{{ knp_pagination_sortable(pagination, 'label_comment'|trans, 'borrowing.comment') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_records'|trans, 'borrowing.records') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'created_at'|trans, 'borrowing.createdAt') }}</th>
+        <th>{{ 'label_actions'|trans }}</th>
+    </tr>
+    <tbody>
+    {% for borrowing in pagination.items %}
+        {% if borrowing.isExecuted == 1 %}
+            <tr>
+                <td>{{ borrowing.comment }} </td>
+                <td>{{ borrowing.record.title }}</td>
+                <td> {{ borrowing.createdAt|date('Y/m/d') }} </td>
+                <td>
+                        <a href="{{ url('borrowing_return', {id: borrowing.id}) }}" title="Return">
+                            Return
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+
+    {% endfor %}
+{% endif %}
+    </tbody>
+{% endblock %}
