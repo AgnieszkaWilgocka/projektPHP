@@ -7,8 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Record;
 use App\Form\RecordType;
-use App\Repository\RecordRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\RecordService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,15 +22,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RecordController extends AbstractController
 {
+    /**
+     * @var RecordService
+     */
+    private $recordService;
+
+    /**
+     * RecordController constructor.
+     *
+     * @param RecordService $recordService
+     */
+    public function __construct(RecordService $recordService)
+    {
+        $this->recordService = $recordService;
+    }
 
     /**
      * Index action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Repository\RecordRepository          $recordRepository Record respository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator        Paginator
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP Resposne
+     * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @Route(
      *     "/",
@@ -39,14 +50,10 @@ class RecordController extends AbstractController
      *      name="record_index"
      *)
      */
-    public function index(Request $request, RecordRepository $recordRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', '1');
-        $pagination = $paginator->paginate(
-            $recordRepository->queryAll(),
-            $page,
-            RecordRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $pagination = $this->recordService->createPaginatedList($page);
 
         return $this->render(
             'record/index.html.twig',
@@ -80,7 +87,6 @@ class RecordController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
-     * @param \App\Repository\RecordRepository          $recordRepository Record repository
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
@@ -94,14 +100,14 @@ class RecordController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function create(Request $request, RecordRepository $recordRepository):Response
+    public function create(Request $request):Response
     {
         $record = new Record();
         $form = $this->createForm(RecordType::class, $record);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recordRepository->save($record);
+            $this->recordService->save($record);
 
             $this->addFlash('success', 'record_created_successfully');
 
@@ -112,15 +118,15 @@ class RecordController extends AbstractController
         return $this->render(
             'record/create.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'record' => $record,
             ]
         );
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTPP request
-     * @param \App\Entity\Record                        $record             Record entity
-     * @param \App\Repository\RecordRepository          $recordRepository   Record repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTPP request
+     * @param \App\Entity\Record                        $record  Record entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -135,13 +141,13 @@ class RecordController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Record $record, RecordRepository $recordRepository): Response
+    public function edit(Request $request, Record $record): Response
     {
         $form = $this->createForm(RecordType::class, $record, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recordRepository->save($record);
+            $this->recordService->save($record);
 
             $this->addFlash('success', 'record_edited_successfully');
 
@@ -158,9 +164,8 @@ class RecordController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
-     * @param \App\Entity\Record                        $record           Record entity
-     * @param \App\Repository\RecordRepository          $recordRepository Record repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Record                        $record  Record entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -176,7 +181,7 @@ class RecordController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Record $record, RecordRepository $recordRepository): Response
+    public function delete(Request $request, Record $record): Response
     {
         $form = $this->createForm(RecordType::class, $record, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -186,7 +191,7 @@ class RecordController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recordRepository->delete($record);
+            $this->recordService->delete($record);
 
             $this->addFlash('success', 'record_deleted_successfully');
 
@@ -197,7 +202,7 @@ class RecordController extends AbstractController
             'record/delete.html.twig',
             [
                 'form' => $form->createView(),
-                'record' => $record
+                'record' => $record,
             ]
         );
     }

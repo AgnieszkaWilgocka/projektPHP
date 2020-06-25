@@ -35,6 +35,12 @@ class CategoryRepository extends ServiceEntityRepository
         $this->_em->flush($category);
     }
 
+    /**
+     * @param Category $category
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function delete(Category $category): void
     {
         $this->_em->remove($category);
@@ -48,8 +54,8 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder();
-            //->orderBy('category.name', 'ASC');
     }
+
     /**
      * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder QueryBuilder
      *
@@ -58,7 +64,6 @@ class CategoryRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('category');
-
     }
     // /**
     //  * @return Category[] Returns an array of Category objects

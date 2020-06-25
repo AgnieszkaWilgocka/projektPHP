@@ -6,8 +6,7 @@ namespace App\Controller;
 
 use \App\Entity\Category;
 use App\Form\CategoryType;
-use App\Repository\CategoryRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\CategoryService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +20,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoryController extends AbstractController
 {
+    private $categoryService;
+
+    /**
+     * CategoryController constructor.
+     *
+     * @param CategoryService $categoryService
+     */
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      *
      * Index action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Repository\CategoryRepository $categoryRepository Category repository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -37,14 +46,10 @@ class CategoryController extends AbstractController
      *     name="category_index"
      * )
      */
-    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', '1');
-        $pagination = $paginator->paginate(
-            $categoryRepository->queryAll(),
-            $page,
-            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $pagination = $this->categoryService->createPaginatedList($page);
 
         return $this->render(
             'category/index.html.twig',
@@ -73,8 +78,7 @@ class CategoryController extends AbstractController
         );
     }
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Repository\CategoryRepository        $categoryRepository Repository Category repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -88,14 +92,14 @@ class CategoryController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function create(Request $request, CategoryRepository $categoryRepository): Response
+    public function create(Request $request): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryRepository->save($category);
+            $this->categoryService->save($category);
 
             $this->addFlash('success', 'category_created_successfully');
 
@@ -109,9 +113,8 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Entity\Category                      $category           Category entity
-     * @param \App\Repository\CategoryRepository        $categoryRepository Category repository
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
+     * @param \App\Entity\Category                      $category Category entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -127,14 +130,13 @@ class CategoryController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
 
-    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function edit(Request $request, Category $category): Response
     {
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryRepository->save($category);
-
+            $this->categoryService->save($category);
 
             $this->addFlash('success', 'category_updated_successfully');
 
@@ -144,15 +146,14 @@ class CategoryController extends AbstractController
             'category/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'category' => $category
+                'category' => $category,
             ]
         );
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Entity\Category                      $category           Category entity
-     * @param \App\Repository\CategoryRepository        $categoryRepository Category repository
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
+     * @param \App\Entity\Category                      $category Category entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -169,8 +170,13 @@ class CategoryController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
 
-    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function delete(Request $request, Category $category): Response
     {
+        if ($category->getRecords()->count()) {
+            $this->addFlash('warning', 'message_category_contains_tasks');
+
+            return $this->redirectToRoute('category_index');
+        }
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
@@ -178,9 +184,8 @@ class CategoryController extends AbstractController
             $form->submit($request->request->get($form->getName()));
         }
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $categoryRepository->delete($category);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->delete($category);
 
             $this->addFlash('success', 'category_deleted_successfully');
 
@@ -191,10 +196,8 @@ class CategoryController extends AbstractController
             'category/delete.html.twig',
             [
                 'form' => $form->createView(),
-                'category' => $category
+                'category' => $category,
             ]
         );
     }
-
-
 }

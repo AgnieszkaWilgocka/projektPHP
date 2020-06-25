@@ -5,7 +5,7 @@
 namespace App\Form\DataTransformer;
 
 use App\Entity\Tag;
-use App\Repository\TagRepository;
+use App\Service\TagService;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
@@ -13,17 +13,26 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class TagsDataTransformer implements DataTransformerInterface
 {
-    private $tagsRepository;
+    private $tagsService;
 
-    public function __construct(TagRepository $tagRepository)
+    /**
+     * TagsDataTransformer constructor.
+     *
+     * @param TagService $tagService
+     */
+    public function __construct(TagService $tagService)
     {
-        $this->tagsRepository = $tagRepository;
+        $this->tagsService = $tagService;
     }
 
+    /**
+     * @param mixed $tags
+     *
+     * @return string
+     */
     public function transform($tags): string
     {
         if (null == $tags) {
-
             return '';
         }
 
@@ -36,6 +45,14 @@ class TagsDataTransformer implements DataTransformerInterface
         return implode(',', $tagTitles);
     }
 
+    /**
+     * @param mixed $value
+     *
+     * @return array|mixed
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function reverseTransform($value)
     {
         $tagTitles = explode(',', $value);
@@ -43,18 +60,17 @@ class TagsDataTransformer implements DataTransformerInterface
 
         foreach ($tagTitles as $tagTitle) {
             if ('' !== trim($tagTitle)) {
-                $tag = $this->tagsRepository->findOneByTitle(strtolower($tagTitle));
+                $tag = $this->tagsService->findOneByTitle(strtolower($tagTitle));
 
                 if ($tag == null) {
                     $tag = new Tag();
                     $tag->setTitle($tagTitle);
-                    $this->tagsRepository->save($tag);
+                    $this->tagsService->save($tag);
                 }
                 $tags[] = $tag;
             }
         }
+
         return $tags;
     }
-
-
 }

@@ -35,9 +35,11 @@
                         </a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
+                        {% if not category.records|length %}
                         <a href="{{ url('category_delete', {'id': category.id}) }}" title="{{'action_delete'|trans}}">
                             {{'action_delete'|trans}}
                         </a>
+                        {% endif %}
                         {% endif %}
                     </td>
                 </tr>

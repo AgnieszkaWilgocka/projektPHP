@@ -12,6 +12,7 @@ use App\Form\PasswordType;
 use App\Form\UpgradePasswordType;
 use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,21 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @var UserService
+     */
+    private $userService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * @param User $user
      *
@@ -49,8 +65,6 @@ class UserController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \App\Repository\UserRepository $userRepository User repository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -60,14 +74,10 @@ class UserController extends AbstractController
      *     name="user_index"
      * )
      */
-    public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', '1');
-        $pagination = $paginator->paginate(
-            $userRepository->queryAll(),
-            $page,
-            UserRepository::PAGINATOR_ITEM_PER_PAGE
-        );
+        $pagination = $this->userService->createPaginatedList($page);
 
         return $this->render(
             'user/index.html.twig',
@@ -79,9 +89,8 @@ class UserController extends AbstractController
 
 
     /**
-     * @param Request $request
-     * @param User $user
-     * @param UserRepository $userRepository
+     * @param Request                      $request
+     * @param User                         $user
      * @param UserPasswordEncoderInterface $passwordEncoder
      *
      * @return Response
@@ -93,7 +102,7 @@ class UserController extends AbstractController
      *     requirements={"id" : "[1-9]\d*"},
      * )
      */
-    public function changePassword(Request $request, User $user, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $form = $this->createForm(UpgradePasswordType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -106,7 +115,7 @@ class UserController extends AbstractController
                 )
             );
 
-            $userRepository->save($user);
+            $this->userService->save($user);
             $this->addFlash('success', 'password changed successfully');
 
             return $this->redirectToRoute('category_index');

@@ -10,6 +10,8 @@ use App\Entity\User;
 use App\Form\BorrowingType;
 use App\Repository\BorrowingRepository;
 use App\Repository\RecordRepository;
+use App\Service\BorrowingService;
+use App\Service\RecordService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,13 +30,31 @@ use Symfony\Component\Security\Core\Security;
 class BorrowingController extends AbstractController
 {
 
+    /**
+     * @var BorrowingService
+     */
+    private $borrowingService;
+
+    /**
+     * @var RecordService
+     */
+    private $recordService;
+
+    /**
+     * BorrowingController constructor.
+     *
+     * @param BorrowingService $borrowingService
+     * @param RecordService    $recordService
+     */
+    public function __construct(BorrowingService $borrowingService, RecordService $recordService)
+    {
+        $this->borrowingService = $borrowingService;
+        $this->recordService = $recordService;
+    }
 
     /**
      * /**
      * @param Request $request
-     * @param BorrowingRepository $borrowingRepository
-     * @param PaginatorInterface $paginator
-     * @param Security $security
      *
      * @return Response
      *
@@ -46,15 +66,10 @@ class BorrowingController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function manageBorrowing(Request $request, BorrowingRepository $borrowingRepository, PaginatorInterface $paginator): Response
+    public function manageBorrowing(Request $request): Response
     {
         $page = $request->query->getInt('page', '1');
-        $pagination = $paginator->paginate(
-            $borrowingRepository->queryAll(),
-            $page,
-            BorrowingRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-
+        $pagination = $this->borrowingService->createdPaginatedList($page);
 
         return $this->render(
             'borrowing/manage.html.twig',
@@ -64,8 +79,7 @@ class BorrowingController extends AbstractController
 
     /**
      * @param Request $request
-     * @param BorrowingRepository $borrowingRepository
-     * @param PaginatorInterface $paginator
+     * @param User    $user
      *
      * @return Response
      *
@@ -76,14 +90,10 @@ class BorrowingController extends AbstractController
      *     requirements={"id" : "[1-9]\d*"}
      * )
      */
-    public function myBorrowing(Request $request, BorrowingRepository $borrowingRepository, PaginatorInterface $paginator, User $user)
+    public function myBorrowing(Request $request, User $user)
     {
         $page = $request->query->getInt('page', '1');
-        $pagination = $paginator->paginate(
-            $borrowingRepository->queryByAuthor($user),
-            $page,
-            BorrowingRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $pagination = $this->borrowingService->createdPaginatedListByAuthor($page, $user);
 
         return $this->render(
             'borrowing/own.html.twig',
@@ -94,11 +104,7 @@ class BorrowingController extends AbstractController
 
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request             HTTP Request
-     * @param \App\Repository\BorrowingRepository       $borrowingRepository Borrowing repository
-     * @param \App\Entity\Record                        $record              Record entity
-     * @param \App\Repository\RecordRepository          $recordRepository    Record repository
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @return Response
      *
@@ -112,7 +118,7 @@ class BorrowingController extends AbstractController
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function create(Request $request, BorrowingRepository $borrowingRepository, RecordRepository $recordRepository): Response
+    public function create(Request $request): Response
     {
         $borrowing = new Borrowing();
         $form = $this->createForm(BorrowingType::class, $borrowing);
@@ -124,8 +130,8 @@ class BorrowingController extends AbstractController
             $borrowing->setAuthor($this->getUser());
             $borrowing->setCreatedAt(new \DateTime());
             $borrowing->setIsExecuted(false);
-            $recordRepository->save($record);
-            $borrowingRepository->save($borrowing);
+            $this->recordService->save($record);
+            $this->borrowingService->save($borrowing);
 
             $this->addFlash('success', 'your borrowing has sent');
 
@@ -143,11 +149,13 @@ class BorrowingController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request   $request
      * @param Borrowing $borrowing
-     * @param BorrowingRepository $borrowingRepository
      *
      * @return Response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route(
      *     "/{id}/accept",
@@ -156,14 +164,14 @@ class BorrowingController extends AbstractController
      *     requirements={"id": "[1-9]\d*"}
      * )
      */
-    public function accept(Request $request, Borrowing $borrowing, BorrowingRepository $borrowingRepository): Response
+    public function accept(Request $request, Borrowing $borrowing): Response
     {
         $form = $this->createForm(FormType::class, $borrowing, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $borrowing->setIsExecuted(true);
-            $borrowingRepository->save($borrowing);
+            $this->borrowingService->save($borrowing);
 
             $this->addFlash('success', 'order has been accepted');
 
@@ -180,10 +188,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request   $request
      * @param Borrowing $borrowing
-     * @param BorrowingRepository $borrowingRepository
-     * @param RecordRepository $recordRepository
      *
      * @return Response
      *
@@ -197,7 +203,7 @@ class BorrowingController extends AbstractController
      *     requirements={"id": "[1-9]\d*"}
      * )
      */
-    public function decline(Request $request, Borrowing $borrowing, BorrowingRepository $borrowingRepository, RecordRepository $recordRepository): Response
+    public function decline(Request $request, Borrowing $borrowing): Response
     {
         $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -206,8 +212,8 @@ class BorrowingController extends AbstractController
             $borrowing->setIsExecuted(true);
             $record = $form->get('record')->getData();
             $record->setAmount($record->getAmount()+1);
-            $recordRepository->save($record);
-            $borrowingRepository->delete($borrowing);
+            $this->recordService->save($record);
+            $this->borrowingService->delete($borrowing);
 
             $this->addFlash('success', 'borrowing has been declined');
 
@@ -224,10 +230,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request   $request
      * @param Borrowing $borrowing
-     * @param BorrowingRepository $borrowingRepository
-     * @param RecordRepository $recordRepository
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
@@ -241,7 +245,7 @@ class BorrowingController extends AbstractController
      *     requirements={"id" : "[1-9]\d*"}
      * )
      */
-    public function returnBorrowing(Request $request, Borrowing $borrowing, BorrowingRepository $borrowingRepository, RecordRepository $recordRepository)
+    public function returnBorrowing(Request $request, Borrowing $borrowing)
     {
         $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -253,8 +257,8 @@ class BorrowingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $record = $form->get('record')->getData();
             $record->setAmount($record->getAmount()+1);
-            $recordRepository->save($record);
-            $borrowingRepository->delete($borrowing);
+            $this->recordService->save($record);
+            $this->borrowingService->delete($borrowing);
 
             $this->addFlash('success', 'your borrowing has been returned');
 
