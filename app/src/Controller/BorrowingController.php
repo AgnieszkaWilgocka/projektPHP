@@ -8,18 +8,14 @@ namespace App\Controller;
 use App\Entity\Borrowing;
 use App\Entity\User;
 use App\Form\BorrowingType;
-use App\Repository\BorrowingRepository;
-use App\Repository\RecordRepository;
 use App\Service\BorrowingService;
 use App\Service\RecordService;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * Class BorrowingController
@@ -89,6 +85,10 @@ class BorrowingController extends AbstractController
      *     name="my_borrowing",
      *     requirements={"id" : "[1-9]\d*"}
      * )
+     * @IsGranted(
+     *     "USER_VIEW",
+     *     subject="user",
+     * )
      */
     public function myBorrowing(Request $request, User $user)
     {
@@ -126,6 +126,12 @@ class BorrowingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $record = $form->get('record')->getData();
+            if ($record->getAmount() == 0 ) {
+
+                $this->addFlash('warning', 'sorry, but this record is not available');
+
+                return $this->redirectToRoute('borrowing_create');
+            }
             $record->setAmount($record->getAmount()-1);
             $borrowing->setAuthor($this->getUser());
             $borrowing->setCreatedAt(new \DateTime());
@@ -135,8 +141,7 @@ class BorrowingController extends AbstractController
 
             $this->addFlash('success', 'your borrowing has sent');
 
-
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('my_borrowing', );
         }
 
         return $this->render(
@@ -163,6 +168,7 @@ class BorrowingController extends AbstractController
      *     name="borrowing_accept",
      *     requirements={"id": "[1-9]\d*"}
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function accept(Request $request, Borrowing $borrowing): Response
     {
@@ -202,6 +208,7 @@ class BorrowingController extends AbstractController
      *     name="borrowing_decline",
      *     requirements={"id": "[1-9]\d*"}
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function decline(Request $request, Borrowing $borrowing): Response
     {
@@ -243,6 +250,10 @@ class BorrowingController extends AbstractController
      *     methods={"GET", "DELETE"},
      *     name="borrowing_return",
      *     requirements={"id" : "[1-9]\d*"}
+     * )
+     * @IsGranted(
+     *     "BORROWING_DELETE",
+     *     subject="borrowing",
      * )
      */
     public function returnBorrowing(Request $request, Borrowing $borrowing)

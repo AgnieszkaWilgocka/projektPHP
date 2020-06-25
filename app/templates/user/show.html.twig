@@ -14,9 +14,9 @@
 <h1>My account</h1>
 {% if user is defined and user|length %}
     <dl>
-        <dt>Email</dt>
+        <dt>{{'label_email'|trans}}</dt>
         <dd>{{ user.email }}</dd>
-        <dt>Nick</dt>
+        <dt>{{'label_nick'|trans}}</dt>
         <dd>{{ user.userData.nick }}</dd>
 
         <dd>
@@ -27,7 +27,7 @@
                 {{'action_change_password'|trans}}
             </a>
             {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ url('manage_borrowing', {id: app.user.id}) }}" title="{{'manage_borrowings'}}">
+            <a href="{{ url('manage_borrowing') }}" title="{{'manage_borrowings'|trans}}">
                 {{ 'manage_borrowings'|trans }}
             </a>
             {% endif %}

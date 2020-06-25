@@ -28,7 +28,9 @@ class BorrowingType extends AbstractType
             [
                 'class' => Record::class,
                 'choice_label' => function ($record) {
-                    return $record->getTitle();
+                    if ($record->getAmount() > 0) {
+                        return $record->getTitle();
+                    }
                 },
                 'label' => 'label_records',
                 'required' => true,

@@ -14,6 +14,7 @@ use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +55,10 @@ class UserController extends AbstractController
      *     name="user_show",
      *     requirements={"id": "[1-9]\d*"}
      * )
+     * @IsGranted(
+     *     "USER_VIEW",
+     *     subject="user",
+     * )
      */
     public function show(User $user): Response
     {
@@ -73,6 +78,7 @@ class UserController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="user_index"
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request): Response
     {
@@ -100,6 +106,10 @@ class UserController extends AbstractController
      *     methods={"GET", "PUT"},
      *     name="change_password",
      *     requirements={"id" : "[1-9]\d*"},
+     * )
+     * @IsGranted(
+     *     "USER_EDIT",
+     *     subject="user",
      * )
      */
     public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response

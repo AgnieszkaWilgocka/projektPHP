@@ -25,9 +25,11 @@ my borrowing
                 <td>{{ borrowing.record.title }}</td>
                 <td> {{ borrowing.createdAt|date('Y/m/d') }} </td>
                 <td>
+            {% if is_granted('BORROWING_VIEW', borrowing) %}
                         <a href="{{ url('borrowing_return', {id: borrowing.id}) }}" title="Return">
                             Return
                         </a>
+            {% endif %}
                     {% endif %}
                 </td>
             </tr>

@@ -8,6 +8,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -46,6 +47,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
+     * @Assert\Email(
+     *     message="The email '{{ value }}' is not a valid email."
+     * )
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $email;
 
@@ -58,6 +65,14 @@ class User implements UserInterface
      * @var string The hashed password
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\Type(type="string")
+     * @Assert\Length(
+     *     min="6",
+     *     max="20",
+     * )
+     * @Assert\NotBlank()
+     *
      */
     private $password;
 
@@ -177,11 +192,21 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * Getter for UserData
+     *
+     * @return UserData|null
+     */
     public function getUserData(): ?UserData
     {
         return $this->userData;
     }
 
+    /**
+     * Setter for UserData
+     *
+     * @param UserData|null $userData
+     */
     public function setUserData(?UserData $userData): void
     {
         $this->userData = $userData;

@@ -183,6 +183,11 @@ class RecordController extends AbstractController
      */
     public function delete(Request $request, Record $record): Response
     {
+        if ($record->getBorrowings()->count()) {
+            $this->addFlash('warning', 'someone_is_borrowing_this_record');
+
+            return $this->redirectToRoute('record_index');
+        }
         $form = $this->createForm(RecordType::class, $record, ['method' => 'DELETE']);
         $form->handleRequest($request);
 

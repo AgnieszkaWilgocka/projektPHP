@@ -8,10 +8,14 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TagRepository::class)
  * @ORM\Table(name="tags")
+ *
+ * @UniqueEntity(fields={"title"})
  */
 class Tag
 {
@@ -28,6 +32,13 @@ class Tag
      * Title.
      *
      * @ORM\Column(type="string", length=45)
+     *
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     max="10",
+     * )
      */
     private $title;
 
@@ -36,6 +47,9 @@ class Tag
      */
     private $records;
 
+    /**
+     * Tag constructor.
+     */
     public function __construct()
     {
         $this->records = new ArrayCollection();
@@ -79,6 +93,11 @@ class Tag
         return $this->records;
     }
 
+    /**
+     * @param Record $record
+     *
+     * @return $this
+     */
     public function addRecord(Record $record): self
     {
         if (!$this->records->contains($record)) {
@@ -89,6 +108,11 @@ class Tag
         return $this;
     }
 
+    /**
+     * @param Record $record
+     *
+     * @return $this
+     */
     public function removeRecord(Record $record): self
     {
         if ($this->records->contains($record)) {

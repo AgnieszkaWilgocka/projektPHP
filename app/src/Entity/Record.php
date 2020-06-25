@@ -1,15 +1,22 @@
 <?php
 
+/**
+ * Record entity
+ */
 namespace App\Entity;
 
 use App\Repository\RecordRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RecordRepository::class)
  * @ORM\Table(name="records")
+ *
+ * @UniqueEntity(fields={"title"})
  */
 class Record
 {
@@ -22,6 +29,14 @@ class Record
 
     /**
      * @ORM\Column(type="string", length=45)
+     *
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     max="50",
+     * )
+     *
      */
     private $title;
 
@@ -44,6 +59,8 @@ class Record
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Assert\PositiveOrZero()
      */
     private $amount;
 
@@ -116,6 +133,11 @@ class Record
         return $this->tags;
     }
 
+    /**
+     * @param Tag $tag
+     *
+     * @return $this
+     */
     public function addTag(Tag $tag): self
     {
         if (!$this->tags->contains($tag)) {
@@ -125,6 +147,11 @@ class Record
         return $this;
     }
 
+    /**
+     * @param Tag $tag
+     *
+     * @return $this
+     */
     public function removeTag(Tag $tag): self
     {
         if ($this->tags->contains($tag)) {
@@ -142,6 +169,11 @@ class Record
         return $this->borrowings;
     }
 
+    /**
+     * @param Borrowing $borrowing
+     *
+     * @return $this
+     */
     public function addBorrowing(Borrowing $borrowing): self
     {
         if (!$this->borrowings->contains($borrowing)) {
@@ -152,6 +184,11 @@ class Record
         return $this;
     }
 
+    /**
+     * @param Borrowing $borrowing
+     *
+     * @return $this
+     */
     public function removeBorrowing(Borrowing $borrowing): self
     {
         if ($this->borrowings->contains($borrowing)) {
@@ -165,11 +202,17 @@ class Record
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAmount(): ?int
     {
         return $this->amount;
     }
 
+    /**
+     * @param int|null $amount
+     */
     public function setAmount(?int $amount): void
     {
         $this->amount = $amount;

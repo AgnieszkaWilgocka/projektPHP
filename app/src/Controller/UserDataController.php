@@ -9,6 +9,7 @@ use App\Entity\UserData;
 use App\Form\UserDataType;
 use App\Repository\UserDataRepository;
 use App\Service\UserDataService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +50,10 @@ class UserDataController extends AbstractController
      *     methods={"GET", "PUT"},
      *     name="user_data_edit",
      *     requirements={"id": "[1-9]\d*"},
+     * );
+     * @IsGranted(
+     *     "USER_DATA_EDIT",
+     *     subject="userData"
      * )
      */
     public function edit(Request $request, UserData $userData): Response
