@@ -6,14 +6,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\UserData;
-
-use App\Form\PasswordType;
 use App\Form\UpgradePasswordType;
-use App\Repository\UserDataRepository;
-use App\Repository\UserRepository;
 use App\Service\UserService;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

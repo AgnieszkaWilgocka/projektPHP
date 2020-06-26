@@ -31,6 +31,8 @@ class BorrowingType extends AbstractType
                     if ($record->getAmount() > 0) {
                         return $record->getTitle();
                     }
+
+                    return null;
                 },
                 'label' => 'label_records',
                 'required' => true,

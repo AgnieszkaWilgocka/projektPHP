@@ -20,6 +20,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 {
 
     const PAGINATOR_ITEM_PER_PAGE = 10;
+
+    /**
+     * UserRepository constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -34,8 +40,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
     /**
-     *
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param UserInterface $user
+     * @param string        $newEncodedPassword
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
@@ -48,6 +59,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    /**
+     * @param User $user
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function save(User $user)
     {
         $this->_em->persist($user);
@@ -55,14 +72,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
 
-
+    /**
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder();
     }
 
 
-
+    /**
+     * @param QueryBuilder|null $queryBuilder
+     *
+     * @return QueryBuilder
+     */
     public function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('user');

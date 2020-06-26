@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Borrowing;
+use App\Entity\Record;
 use App\Entity\User;
 use App\Form\BorrowingType;
 use App\Service\BorrowingService;
@@ -141,7 +142,7 @@ class BorrowingController extends AbstractController
 
             $this->addFlash('success', 'your borrowing has sent');
 
-            return $this->redirectToRoute('my_borrowing', );
+            return $this->redirectToRoute('record_index');
         }
 
         return $this->render(
@@ -204,7 +205,7 @@ class BorrowingController extends AbstractController
      *
      * @Route(
      *     "/{id}/decline",
-     *     methods={"GET", "PUT"},
+     *     methods={"GET", "DELETE"},
      *     name="borrowing_decline",
      *     requirements={"id": "[1-9]\d*"}
      * )
@@ -212,8 +213,12 @@ class BorrowingController extends AbstractController
      */
     public function decline(Request $request, Borrowing $borrowing): Response
     {
-        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'PUT']);
+        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE']);
         $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $borrowing->setIsExecuted(true);
@@ -261,7 +266,7 @@ class BorrowingController extends AbstractController
         $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
-        if ($request->isMethod('DELETE') && !$form->isValid()) {
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));
         }
 
@@ -273,7 +278,7 @@ class BorrowingController extends AbstractController
 
             $this->addFlash('success', 'your borrowing has been returned');
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('record_index');
         }
 
         return $this->render(

@@ -16,18 +16,15 @@
     <h1>{{'title_category_view'|trans({'%id%': category.name|default('')}) }}</h1>
     {% if category is defined and category|length %}
         <dl>
-            <dt>{{ 'label_name'|trans }}</dt>
-            <dd>{{ category.name }}</dd>
             <dt>{{'label_records'|trans}}</dt>
             {% for records in category.records %}
-             <dd>{{ records.title }}</dd>
-                <a href="{{ url('record_show', {id: records.id}) }}">
-                    {{'record_view'|trans}}
-                </a>
+            <a class="btn btn-link" href="{{ url('record_show', { 'id': records.id }) }}" title="{{ records.title }}">
+                {{ records.title }}
+            </a>
             {% endfor %}
         <dt> {{ 'label_actions'|trans }}</dt>
         <dd>
-            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+            <a class="btn btn-outline-primary" href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
                 {{ 'action_back_to_list'|trans }}
             </a>
         </dd>

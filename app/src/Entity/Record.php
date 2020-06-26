@@ -60,7 +60,7 @@ class Record
     /**
      * @ORM\Column(type="integer")
      *
-     * @Assert\PositiveOrZero()
+     * @Assert\Positive()
      */
     private $amount;
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Record repository
+ */
 namespace App\Repository;
 
 use App\Entity\Record;
@@ -26,6 +29,11 @@ class RecordRepository extends ServiceEntityRepository
      */
     const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+    /**
+     * RecordRepository constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Record::class);
@@ -56,11 +64,16 @@ class RecordRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select('record', 'category')
-            ->innerJoin ('record.category','category');
+            ->select('record', 'category', 'borrowing', 'author')
+            ->innerJoin('record.category', 'category')
+            ->leftJoin('record.borrowings', 'borrowing')
+            ->leftJoin('borrowing.author', 'author');
     }
 
     /**

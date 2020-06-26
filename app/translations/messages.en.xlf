@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="action_accept_borrowing">
+                <source>action_accept_borrowing</source>
+                <target>Accept</target>
+            </trans-unit>
             <trans-unit id="action_back_to_list">
                 <source>action_back_to_list</source>
                 <target>Back</target>
@@ -10,9 +14,21 @@
                 <source>action_borrowing</source>
                 <target>Make borrowing</target>
             </trans-unit>
+            <trans-unit id="action_change_data">
+                <source>action_change_data</source>
+                <target>Change data</target>
+            </trans-unit>
+            <trans-unit id="action_change_password">
+                <source>action_change_password</source>
+                <target>Change Password</target>
+            </trans-unit>
             <trans-unit id="action_create">
                 <source>action_create</source>
                 <target>Create</target>
+            </trans-unit>
+            <trans-unit id="action_decline_borrowing">
+                <source>action_decline_borrowing</source>
+                <target>Decline</target>
             </trans-unit>
             <trans-unit id="action_delete">
                 <source>action_delete</source>
@@ -29,6 +45,14 @@
             <trans-unit id="action_login">
                 <source>action_login</source>
                 <target>Login</target>
+            </trans-unit>
+            <trans-unit id="action_set_nick">
+                <source>action_set_nick</source>
+                <target>Set nick</target>
+            </trans-unit>
+            <trans-unit id="action_show_records">
+                <source>action_show_records</source>
+                <target>Show records</target>
             </trans-unit>
             <trans-unit id="action_sign_up">
                 <source>action_sign_up</source>
@@ -50,6 +74,18 @@
                 <source>label_borrowing</source>
                 <target>Borrowing</target>
             </trans-unit>
+            <trans-unit id="label_comment">
+                <source>label_comment</source>
+                <target>Comment</target>
+            </trans-unit>
+            <trans-unit id="label_disabled">
+                <source>label_disabled</source>
+                <target>Disabled</target>
+            </trans-unit>
+            <trans-unit id="label_manage">
+                <source>label_manage</source>
+                <target>Manage</target>
+            </trans-unit>
             <trans-unit id="label_name">
                 <source>label_name</source>
                 <target>Name</target>
@@ -57,14 +93,6 @@
             <trans-unit id="label_my_borrowings">
                 <source>label_my_borrowings</source>
                 <target>My borrowings</target>
-            </trans-unit>
-            <trans-unit id="label_tags">
-                <source>label_tags</source>
-                <target>Tags</target>
-            </trans-unit>
-            <trans-unit id="label_title">
-                <source>label_title</source>
-                <target>Title</target>
             </trans-unit>
             <trans-unit id="label_records">
                 <source>label_records</source>
@@ -74,13 +102,29 @@
                 <source>label_registration</source>
                 <target>Registration</target>
             </trans-unit>
+            <trans-unit id="label_return">
+                <source>label_return</source>
+                <target>Return</target>
+            </trans-unit>
+            <trans-unit id="label_tags">
+                <source>label_tags</source>
+                <target>Tags</target>
+            </trans-unit>
+            <trans-unit id="label_title">
+                <source>label_title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="label_users">
+                <source>label_users</source>
+                <target>Users</target>
+            </trans-unit>
             <trans-unit id="manage_accounts">
                 <source>manage_accounts</source>
                 <target>Manage accounts</target>
             </trans-unit>
-            <trans-unit id="manage_order">
-                <source>manage_order</source>
-                <target>Manage order</target>
+            <trans-unit id="manage_borrowing">
+                <source>manage_borrowings</source>
+                <target>Manage borrowings</target>
             </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
@@ -89,6 +133,10 @@
             <trans-unit id="record_view">
                 <source>record_view</source>
                 <target>Record view</target>
+            </trans-unit>
+            <trans-unit id="tag_view">
+                <source>tag_view</source>
+                <target>View tag#%id%</target>
             </trans-unit>
             <trans-unit id="title_category_list">
                 <source>title_category_list</source>

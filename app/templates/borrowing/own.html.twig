@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-my borrowing
+{{'label_borrowing'|trans}}
 {% endblock %}
 
 {% block body %}
-<h1> My borrowing </h1>
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
+<h1> {{'label_borrowing'|trans}} </h1>
 
 {% if pagination is defined and pagination.items|length %}
 
@@ -14,7 +17,7 @@ my borrowing
     <tr>
         <th>{{ knp_pagination_sortable(pagination, 'label_comment'|trans, 'borrowing.comment') }}</th>
         <th>{{ knp_pagination_sortable(pagination, 'label_records'|trans, 'borrowing.records') }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'created_at'|trans, 'borrowing.createdAt') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'borrowing.createdAt') }}</th>
         <th>{{ 'label_actions'|trans }}</th>
     </tr>
     <tbody>
@@ -29,12 +32,22 @@ my borrowing
                         <a href="{{ url('borrowing_return', {id: borrowing.id}) }}" title="Return">
                             Return
                         </a>
-            {% endif %}
-                    {% endif %}
-                </td>
-            </tr>
 
+            {% endif %}
+                </td>
+            {% else %}
+                <h2>{{ 'no_borrowing'|trans }}</h2>
+                {% endif %}
+            </tr>
     {% endfor %}
 {% endif %}
+    <div class="form-group row float-sm-right">
+        <a class = "btn btn-info" href="{{ url('borrowing_create') }}" title="{{ 'action_borrowing'|trans }}">
+            {{ 'action_borrowing'|trans }}
+        </a>
+    </div>
     </tbody>
+</table>
+    </div>
+    </div>
 {% endblock %}

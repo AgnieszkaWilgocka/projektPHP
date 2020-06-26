@@ -3,12 +3,17 @@
 
 
 {% block title %}
-Users
+{{'label_users'|trans}}
 {% endblock %}
 
 
 {% block body %}
-<h1>Users</h1>
+
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
+
+    <h1>{{'label_users'|trans}}</h1>
 
     {% if pagination is defined and pagination.items|length %}
     <table class="table table-striped">
@@ -25,13 +30,13 @@ Users
     <tr>
     <td>{{ user.email }}</td>
     <td>
-    <a href="{{ url('change_password', {id: user.id}) }}" title="Edit_password">
-        Edit_password
+    <a href="{{ url('change_password', {id: user.id}) }}" title="{{'action_change_password'|trans}}">
+        {{'action_change_password'|trans}}
     </a>
 
 
-        <a href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="Edit_data">
-            Edit_data
+        <a href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="{{'action_change_data'|trans}}">
+            {{'action_change_data'|trans}}
             </a>
 
 
@@ -43,6 +48,8 @@ Users
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
     </div>
-
+        </div>
+        </div>
+        </div>
     {% endif %}
 {% endblock %}

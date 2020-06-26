@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Category repository
+ */
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -18,6 +21,11 @@ class CategoryRepository extends ServiceEntityRepository
     const PAGINATOR_ITEMS_PER_PAGE = 5;
 
 
+    /**
+     * CategoryRepository constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
@@ -53,7 +61,9 @@ class CategoryRepository extends ServiceEntityRepository
      */
     public function queryAll(): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder();
+        return $this->getOrCreateQueryBuilder()
+            ->select('category', 'record')
+            ->innerJoin('category.records', 'record');
     }
 
     /**

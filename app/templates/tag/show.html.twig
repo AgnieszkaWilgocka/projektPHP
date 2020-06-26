@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title_category_view'|trans }}
+    {{ 'tag_view'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -13,18 +13,17 @@
         <div class="card border-0 shadow my-5">
             <div class="card-body p-5">
 
-                <h1>Tag details</h1>
+                <h1>{{'tag_view'|trans ({'%id%': tag.title|default('')}) }}</h1>
                 {% if tag is defined and tag|length %}
                     <dl>
-                        <dt>{{ 'label_title'|trans }}</dt>
-                        <dd>{{ tag.title }}</dd>
-                        <dt>Records</dt>
+                        <dt>{{'label_records'|trans}}</dt>
                         {% for records in tag.records %}
-                            <dd>{{ records.title }}</dd>
+                            <a class="btn btn-link" href="{{ url('record_show', { 'id': records.id }) }}" title="{{ records.title }}">
+                                {{ records.title }}
+                            </a>
                         {% endfor %}
-                        <dt> {{ 'label_actions'|trans }}</dt>
                         <dd>
-                            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+                            <a class="btn btn-outline-primary" href="{{ url('record_index') }}" title="{{ 'action_back_to_list'|trans }}">
                                 {{ 'action_back_to_list'|trans }}
                             </a>
                         </dd>

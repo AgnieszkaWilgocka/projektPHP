@@ -143,6 +143,11 @@ class RecordController extends AbstractController
      */
     public function edit(Request $request, Record $record): Response
     {
+        if ($record->getBorrowings()->count()) {
+            $this->addFlash('warning', 'record_is_already_borrowed');
+
+            return $this->redirectToRoute('record_index');
+        }
         $form = $this->createForm(RecordType::class, $record, ['method' => 'PUT']);
         $form->handleRequest($request);
 

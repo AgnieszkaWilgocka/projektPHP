@@ -169,7 +169,6 @@ class CategoryController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function delete(Request $request, Category $category): Response
     {
         if ($category->getRecords()->count()) {

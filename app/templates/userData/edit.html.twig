@@ -7,6 +7,9 @@
 
 
 {% block body %}
+    <div class="container">
+    <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
     <h1>Edit data</h1>
 
     {{ form_start(form, {method: 'PUT', action: url('user_data_edit', {id: userData.id}) }) }}
@@ -18,10 +21,14 @@
     </div>
 
     <div class="form-group row float-sm-left">
-    <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}">
+    <a class="btn btn-outline-primary" href="{{ url('record_index') }}" title="{{ 'action_back_to_list'|trans }}">
         {{ 'action_back_to_list'|trans }}
     </a>
 
 
     {{ form_end(form) }}
+    </div>
+    </div>
+    </div>
+
 {% endblock %}

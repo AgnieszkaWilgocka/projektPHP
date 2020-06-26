@@ -20,19 +20,25 @@
         <dd>{{ user.userData.nick }}</dd>
 
         <dd>
-          <a href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="{{'action_change_nick'|trans}}">
-                {{'action_change_nick'|trans}}
+            {% if user.userData.nick|length %}
+          <a class="btn btn-warning" href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="{{'action_change_data'|trans}}">
+                {{'action_change_data'|trans}}
             </a>
-            <a href="{{ url('change_password', {id: user.id}) }}" title="{{'action_change_password'|trans}}">
+            {% else %}
+            <a class="btn btn-warning" href="{{ url('user_data_edit', {id: user.userData.id}) }}" title="{{'action_set_nick'|trans}}">
+                {{'action_set_nick'|trans}}
+            </a>
+            {% endif %}
+            <a class="btn btn-warning" href="{{ url('change_password', {id: user.id}) }}" title="{{'action_change_password'|trans}}">
                 {{'action_change_password'|trans}}
             </a>
             {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ url('manage_borrowing') }}" title="{{'manage_borrowings'|trans}}">
+            <a class="btn btn-info" href="{{ url('manage_borrowing') }}" title="{{'manage_borrowings'|trans}}">
                 {{ 'manage_borrowings'|trans }}
             </a>
             {% endif %}
-            <a href="{{ url('my_borrowing', {id: app.user.id}) }}" title="Moje wypozyczenia">
-                Moje wypozyczenia
+            <a class="btn btn-info" href="{{ url('my_borrowing', {id: app.user.id}) }}" title="{{ 'label_my_borrowings'|trans }}">
+                {{'label_my_borrowings'|trans}}
             </a>
         </dd>
     </dl>

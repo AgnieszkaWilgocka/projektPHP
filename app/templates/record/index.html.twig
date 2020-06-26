@@ -29,17 +29,17 @@
                 <td>{{ record.title }}</td>
                 <td>{{ record.category.name }}</td>
                 <td>
-                    <a href="{{ url('record_show', { 'id': record.id }) }}" title="{{ 'action_view'|trans }}">
+                    <a class = "text-info" href="{{ url('record_show', { 'id': record.id }) }}" title="{{ 'action_view'|trans }}">
                         {{ 'action_view'|trans }}
                     </a>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ url('record_edit', {'id': record.id}) }}" title="{{'action_edit'|trans}}">
+                    {% if not record.borrowings|length and is_granted('ROLE_ADMIN') %}
+                    <a class="text-info" href="{{ url('record_edit', {'id': record.id}) }}" title="{{'action_edit'|trans}}">
                         {{'action_edit'|trans}}
                     </a>
                     {% endif %}
                     {% if not record.borrowings|length %}
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ url('record_delete', {'id': record.id}) }}" title="{{'action_delete'|trans}}">
+                    <a class="text-danger" href="{{ url('record_delete', {'id': record.id}) }}" title="{{'action_delete'|trans}}">
                         {{'action_delete'|trans}}
                     </a>
                     {% endif %}
@@ -52,6 +52,11 @@
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
+        <div class="form-group row float-sm-right">
+            <a class = "btn btn-info" href="{{ url('borrowing_create') }}" title="{{ 'action_borrowing'|trans }}">
+                {{ 'action_borrowing'|trans }}
+            </a>
+        </div>
     </div>
         {% else %}
             {{ 'message_empty_list'|trans }}
@@ -59,5 +64,5 @@
 
     </div>
     </div>
-    </div>
+
 {% endblock %}

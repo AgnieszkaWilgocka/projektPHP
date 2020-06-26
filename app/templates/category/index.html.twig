@@ -26,17 +26,17 @@
                 <tr>
                     <td>{{ category.name }}</td>
                     <td>
-                        <a href="{{ url('category_show', { 'id': category.id }) }}" title="{{ 'action_view'|trans }}">
+                        <a class="text-info" href="{{ url('category_show', { 'id': category.id }) }}" title="{{ 'action_view'|trans }}">
                             {{ 'action_view'|trans}}
                         </a>
                         {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ url('category_edit', {'id': category.id}) }}" title="{{'action_edit'|trans}}">
+                        <a  class="text-info" href="{{ url('category_edit', {'id': category.id}) }}" title="{{'action_edit'|trans}}">
                             {{'action_edit'|trans}}
                         </a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
                         {% if not category.records|length %}
-                        <a href="{{ url('category_delete', {'id': category.id}) }}" title="{{'action_delete'|trans}}">
+                        <a class="text-danger"  href="{{ url('category_delete', {'id': category.id}) }}" title="{{'action_delete'|trans}}">
                             {{'action_delete'|trans}}
                         </a>
                         {% endif %}
@@ -58,3 +58,5 @@
 </div>
 {% endblock %}
 
+{#{% block footer %}#}
+{#{% endblock %}#}
