@@ -70,6 +70,10 @@
                 <source>label_actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="label_author">
+                <source>label_author</source>
+                <target>Authors</target>
+            </trans-unit>
             <trans-unit id="label_borrowing">
                 <source>label_borrowing</source>
                 <target>Borrowing</target>
@@ -77,6 +81,10 @@
             <trans-unit id="label_comment">
                 <source>label_comment</source>
                 <target>Comment</target>
+            </trans-unit>
+            <trans-unit id="label_created_at">
+                <source>label_created_at</source>
+                <target>Created at</target>
             </trans-unit>
             <trans-unit id="label_disabled">
                 <source>label_disabled</source>

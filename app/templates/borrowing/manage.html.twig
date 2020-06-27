@@ -2,7 +2,7 @@
 
 
 {% block title %}
-Manage borrowings
+{{'manage_borrowings'|trans}}
 {% endblock %}
 
 
@@ -11,16 +11,17 @@ Manage borrowings
     <div class="container">
     <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
-<h1>Manage borrowings</h1>
+<h1>{{'manage_borrowings'|trans}}</h1>
 
     {% if pagination is defined and pagination.items|length %}
 
     <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-        <th>{{ knp_pagination_sortable(pagination, 'label_comment'|trans, 'borrowing.comment') }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'label_records'|trans, 'borrowing.records') }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'created_at'|trans, 'borrowing.createdAt') }}</th>
+        <th>{{ 'label_comment'|trans }}</th>
+        <th>{{ 'label_records'|trans }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'borrowing.createdAt') }}</th>
+        <th>{{ 'label_author'|trans }}</th>
         <th>{{ 'label_actions'|trans }}</th>
     </tr>
     <tbody>
@@ -32,6 +33,7 @@ Manage borrowings
                     <td>{{ borrowing.comment }} </td>
                     <td>{{ borrowing.record.title }}</td>
                     <td> {{ borrowing.createdAt|date('Y/m/d') }} </td>
+                    <td> {{ borrowing.author.email }} </td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}
                          <a href="{{ url('borrowing_accept', {id: borrowing.id}) }}" title="{{'action_accept_borrowing'|trans}}">

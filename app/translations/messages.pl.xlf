@@ -70,6 +70,10 @@
                 <source>label_actions</source>
                 <target>Akcje</target>
             </trans-unit>
+            <trans-unit id="label_author">
+                <source>label_author</source>
+                <target>Autorzy</target>
+            </trans-unit>
             <trans-unit id="label_borrowing">
                 <source>label_borrowing</source>
                 <target>Wypożyczenie</target>
@@ -77,6 +81,10 @@
             <trans-unit id="label_comment">
                 <source>label_comment</source>
                 <target>Komentarz</target>
+            </trans-unit>
+            <trans-unit id="label_created_at">
+                <source>label_created_at</source>
+                <target>Data utworzenia</target>
             </trans-unit>
             <trans-unit id="label_disabled">
                 <source>label_disabled</source>
