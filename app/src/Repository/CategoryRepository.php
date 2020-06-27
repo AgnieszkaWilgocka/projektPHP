@@ -63,7 +63,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select('category', 'record')
-            ->innerJoin('category.records', 'record');
+            ->leftJoin('category.records', 'record');
     }
 
     /**
