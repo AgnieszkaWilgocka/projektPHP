@@ -11,6 +11,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class CategoryRepository
+ *
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
  * @method Category|null findOneBy(array $criteria, array $orderBy = null)
  * @method Category[]    findAll()
@@ -32,6 +34,8 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Save category
+     *
      * @param \App\Entity\Category $category
      *
      * @throws \Doctrine\ORM\ORMException
@@ -44,6 +48,8 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Delete category
+     *
      * @param Category $category
      *
      * @throws \Doctrine\ORM\ORMException
@@ -57,6 +63,8 @@ class CategoryRepository extends ServiceEntityRepository
 
 
     /**
+     * Query all categories
+     *
      * @return \Doctrine\ORM\QueryBuilder QueryBuilder
      */
     public function queryAll(): QueryBuilder
@@ -67,6 +75,8 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get or create new query builder
+     *
      * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder QueryBuilder
      *
      * @return \Doctrine\ORM\QueryBuilder QueryBuilder

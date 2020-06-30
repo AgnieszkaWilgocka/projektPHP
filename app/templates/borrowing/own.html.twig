@@ -15,8 +15,8 @@
 <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-        <th>{{ knp_pagination_sortable(pagination, 'label_comment'|trans, 'borrowing.comment') }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'label_records'|trans, 'borrowing.records') }}</th>
+        <th>{{ 'label_comment'|trans }}</th>
+        <th>{{ 'label_records'|trans}}</th>
         <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'borrowing.createdAt') }}</th>
         <th>{{ 'label_actions'|trans }}</th>
     </tr>
@@ -26,19 +26,20 @@
             <tr>
                 <td>{{ borrowing.comment }} </td>
                 <td>{{ borrowing.record.title }}</td>
-                <td> {{ borrowing.createdAt|date('Y/m/d') }} </td>
+                <td> {{ borrowing.createdAt|date }} </td>
                 <td>
             {% if is_granted('BORROWING_VIEW', borrowing) %}
-                        <a href="{{ url('borrowing_return', {id: borrowing.id}) }}" title="Return">
-                            Return
+                        <a href="{{ url('borrowing_return', {id: borrowing.id}) }}" title="{{'action_return'|trans}}">
+                            {{'action_return'|trans}}
                         </a>
 
             {% endif %}
                 </td>
             {% else %}
-                <h2>{{ 'no_borrowing'|trans }}</h2>
+                <h2>{{ 'admin_accept'|trans }}</h2>
                 {% endif %}
             </tr>
+
     {% endfor %}
 {% endif %}
     <div class="form-group row float-sm-right">

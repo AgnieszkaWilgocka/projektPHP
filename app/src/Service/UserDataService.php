@@ -16,6 +16,8 @@ use Doctrine\ORM\ORMException;
 class UserDataService
 {
     /**
+     * User data repository
+     *
      * @var UserDataRepository
      */
     private $userDataRepository;
@@ -31,6 +33,8 @@ class UserDataService
     }
 
     /**
+     * Save user data
+     *
      * @param UserData $userData
      *
      * @throws ORMException
@@ -40,5 +44,4 @@ class UserDataService
     {
         $this->userDataRepository->save($userData);
     }
-
 }

@@ -16,11 +16,15 @@ use Knp\Component\Pager\PaginatorInterface;
 class UserService
 {
     /**
+     * User repository
+     *
      * @var UserRepository
      */
     private $userRepository;
 
     /**
+     * Paginator
+     *
      * @var PaginatorInterface
      */
     private $paginator;
@@ -28,6 +32,7 @@ class UserService
 
     /**
      * UserService constructor.
+     *
      * @param UserRepository     $userRepository
      * @param PaginatorInterface $paginator
      */
@@ -38,6 +43,8 @@ class UserService
     }
 
     /**
+     * Create paginated list
+     *
      * @param int $page
      *
      * @return PaginationInterface
@@ -52,11 +59,15 @@ class UserService
     }
 
     /**
+     * Save user
+     *
      * @param User $user
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save(User $user): void
     {
         $this->userRepository->save($user);
     }
-
 }

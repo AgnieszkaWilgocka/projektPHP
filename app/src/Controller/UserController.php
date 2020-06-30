@@ -24,6 +24,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
+     * User service
+     *
      * @var UserService
      */
     private $userService;
@@ -39,6 +41,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * Show action
+     *
      * @param User $user
      *
      * @return Response
@@ -63,6 +67,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * Index action
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
@@ -89,6 +95,8 @@ class UserController extends AbstractController
 
 
     /**
+     * Change password
+     *
      * @param Request                      $request
      * @param User                         $user
      * @param UserPasswordEncoderInterface $passwordEncoder

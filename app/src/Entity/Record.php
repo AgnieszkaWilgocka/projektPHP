@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class Record
+ *
  * @ORM\Entity(repositoryClass=RecordRepository::class)
  * @ORM\Table(name="records")
  *
@@ -21,6 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Record
 {
     /**
+     * Primary key
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -28,6 +32,8 @@ class Record
     private $id;
 
     /**
+     * Title
+     *
      * @ORM\Column(type="string", length=45)
      *
      * @Assert\Type(type="string")
@@ -41,23 +47,31 @@ class Record
     private $title;
 
     /**
+     * Category
+     *
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="records")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
+     * Tags
+     *
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="records", orphanRemoval=true)
      * @ORM\JoinTable(name="records_tags")
      */
     private $tags;
 
     /**
+     * Borrowings
+     *
      * @ORM\OneToMany(targetEntity=Borrowing::class, mappedBy="record")
      */
     private $borrowings;
 
     /**
+     * Amount
+     *
      * @ORM\Column(type="integer")
      *
      * @Assert\Positive()
@@ -124,7 +138,7 @@ class Record
     }
 
     /**
-     * Getter for tags.
+     * Getter for the tags.
      *
      * @return Collection|Tag[]
      */
@@ -134,6 +148,8 @@ class Record
     }
 
     /**
+     * Add for tag
+     *
      * @param Tag $tag
      *
      * @return $this
@@ -162,6 +178,8 @@ class Record
     }
 
     /**
+     * Getter for the borrowings
+     *
      * @return Collection|Borrowing[]
      */
     public function getBorrowings(): Collection
@@ -170,6 +188,8 @@ class Record
     }
 
     /**
+     * Add for borrowings
+     *
      * @param Borrowing $borrowing
      *
      * @return $this
@@ -185,6 +205,8 @@ class Record
     }
 
     /**
+     * Remove for borrowing
+     *
      * @param Borrowing $borrowing
      *
      * @return $this
@@ -203,6 +225,8 @@ class Record
     }
 
     /**
+     * Getter for amount
+     *
      * @return int|null
      */
     public function getAmount(): ?int
@@ -211,6 +235,8 @@ class Record
     }
 
     /**
+     * Setter for amount
+     *
      * @param int|null $amount
      */
     public function setAmount(?int $amount): void

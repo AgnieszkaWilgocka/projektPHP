@@ -17,6 +17,8 @@ class CategoryType extends AbstractType
 {
 
     /**
+     * Builds form
+     *
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
@@ -36,6 +38,8 @@ class CategoryType extends AbstractType
     }
 
     /**
+     * Configure the options for this type
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver The resolver tor the options
      */
     public function configureOptions(OptionsResolver $resolver): void
@@ -44,12 +48,12 @@ class CategoryType extends AbstractType
     }
 
     /**
+     * Returns the prefix of the template block name for this type
+     *
      * @return string The prefix of the template block name
      */
     public function getBlockPrefix(): string
     {
         return 'category';
     }
-
 }
-

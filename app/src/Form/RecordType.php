@@ -6,7 +6,6 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Record;
-use App\Entity\Tag;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -20,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RecordType extends AbstractType
 {
-
     private $tagsDataTransformer;
 
     /**
@@ -34,29 +32,32 @@ class RecordType extends AbstractType
     }
 
     /**
+     * Builds form
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
      * @param array                                        $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-           ->add(
-               'title',
-               TextType::class,
-               [
-                'label' => 'label_title',
-                'required' => true,
-                'attr' => ['max length' => 50],
-                 ]
-           );
-        $builder->add(
-            'amount',
-            IntegerType::class,
-            [
-                'label' => 'label_amount',
-                'required' => true,
-            ]
-        );
+                ->add(
+                    'title',
+                    TextType::class,
+                    [
+                    'label' => 'label_title',
+                    'required' => true,
+                    'attr' => ['max length' => 50],
+                    ]
+                );
+        $builder
+            ->add(
+                'amount',
+                IntegerType::class,
+                [
+                    'label' => 'label_amount',
+                    'required' => true,
+                ]
+            );
         $builder
             ->add(
                 'category',
@@ -68,7 +69,7 @@ class RecordType extends AbstractType
                     },
                     'label' => 'label_category',
                     'placeholder' => 'choice_category',
-                    'required' => true
+                    'required' => true,
                 ]
             );
         $builder
@@ -87,6 +88,8 @@ class RecordType extends AbstractType
     }
 
     /**
+     * Configure the options for this type
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver The resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver): void
@@ -96,6 +99,8 @@ class RecordType extends AbstractType
 
 
     /**
+     * Returns the prefix of the template block name for this type
+     *
      * @return string The prefix of the template block name
      */
     public function getBlockPrefix(): string

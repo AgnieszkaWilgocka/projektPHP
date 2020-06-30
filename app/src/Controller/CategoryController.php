@@ -9,6 +9,7 @@ use App\Form\CategoryType;
 use App\Service\CategoryService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,6 +59,8 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Show action
+     *
      * @param \App\Entity\Category $category Category entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
@@ -78,6 +81,8 @@ class CategoryController extends AbstractController
         );
     }
     /**
+     * Create category
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
@@ -113,6 +118,8 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Edit category
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
      * @param \App\Entity\Category                      $category Category entity
      *
@@ -129,7 +136,6 @@ class CategoryController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function edit(Request $request, Category $category): Response
     {
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'PUT']);
@@ -142,6 +148,7 @@ class CategoryController extends AbstractController
 
             return $this->redirectToRoute('category_index');
         }
+
         return $this->render(
             'category/edit.html.twig',
             [
@@ -152,6 +159,8 @@ class CategoryController extends AbstractController
     }
 
     /**
+     * Delete category
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
      * @param \App\Entity\Category                      $category Category entity
      *
@@ -176,7 +185,7 @@ class CategoryController extends AbstractController
 
             return $this->redirectToRoute('category_index');
         }
-        $form = $this->createForm(CategoryType::class, $category, ['method' => 'DELETE']);
+        $form = $this->createForm(FormType::class, $category, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {

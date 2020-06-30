@@ -32,7 +32,7 @@
                 <tr>
                     <td>{{ borrowing.comment }} </td>
                     <td>{{ borrowing.record.title }}</td>
-                    <td> {{ borrowing.createdAt|date('Y/m/d') }} </td>
+                    <td> {{ borrowing.createdAt|date }} </td>
                     <td> {{ borrowing.author.email }} </td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}

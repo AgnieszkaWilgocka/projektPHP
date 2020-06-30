@@ -10,12 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Class Borrowing
+ *
  * @ORM\Entity(repositoryClass=BorrowingRepository::class)
  * @ORM\Table(name="borrowings")
  */
 class Borrowing
 {
     /**
+     * Primary key
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -23,11 +27,15 @@ class Borrowing
     private $id;
 
     /**
+     * Record
+     *
      * @ORM\ManyToOne(targetEntity=Record::class, inversedBy="borrowings")
      */
     private $record;
 
     /**
+     * Created at
+     *
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @Assert\Type(type="\DateTimeInterface")
@@ -35,6 +43,8 @@ class Borrowing
     private $createdAt;
 
     /**
+     * Comment
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Assert\Type(type="string")
@@ -47,12 +57,16 @@ class Borrowing
     private $comment;
 
     /**
+     * Is executed
+     *
      * @ORM\Column(type="boolean", nullable=true)
      *
      */
     private $isExecuted;
 
     /**
+     * Author
+     *
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -90,7 +104,7 @@ class Borrowing
     }
 
     /**
-     * Getter for CreatedAt
+     * Getter for Created at
      *
      * @return \DateTimeInterface|null
      */
@@ -100,7 +114,7 @@ class Borrowing
     }
 
     /**
-     * Setter for CreatedAt
+     * Setter for Created at
      *
      * @param \DateTimeInterface|null $createdAt
      */
@@ -130,7 +144,7 @@ class Borrowing
     }
 
     /**
-     * Getter for IsExecuted
+     * Getter for Is executed
      *
      * @return bool|null
      */
@@ -140,7 +154,7 @@ class Borrowing
     }
 
     /**
-     * Setter for IsExecuted
+     * Setter for Is executed
      *
      * @param bool|null $isExecuted
      */
@@ -168,6 +182,4 @@ class Borrowing
     {
         $this->author = $author;
     }
-
-
 }

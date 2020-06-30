@@ -18,6 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class RegistrationType extends AbstractType
 {
     /**
+     * Builds form
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -30,10 +32,6 @@ class RegistrationType extends AbstractType
                 'required' => true,
             ]
         );
-        //$builder->add(
-            //'usersData',
-           // UserDataType::class
-
 
         $builder->add(
             'password',
@@ -47,16 +45,24 @@ class RegistrationType extends AbstractType
         );
     }
 
-
+    /**
+     * Configure the options for this type
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => User::class]);
     }
 
 
+    /**
+     * Returns the prefix of the template block name for this type
+     *
+     * @return string The prefix of the template block name
+     */
     public function getBlockPrefix()
     {
         return 'user';
     }
-
 }

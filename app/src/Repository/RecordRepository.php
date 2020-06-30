@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
 /**
+ * Class RecordRepository
+ *
  * @method Record|null find($id, $lockMode = null, $lockVersion = null)
  * @method Record|null findOneBy(array $criteria, array $orderBy = null)
  * @method Record[]    findAll()
@@ -40,6 +42,8 @@ class RecordRepository extends ServiceEntityRepository
     }
 
     /**
+     * Save record
+     *
      * @param \App\Entity\Record $record Record entity
      *
      * @throws \Doctrine\ORM\ORMException
@@ -52,6 +56,8 @@ class RecordRepository extends ServiceEntityRepository
     }
 
     /**
+     * Save delete
+     *
      * @param \App\Entity\Record $record Record entity
      *
      * @throws \Doctrine\ORM\ORMException
@@ -65,6 +71,8 @@ class RecordRepository extends ServiceEntityRepository
 
 
     /**
+     * Query all records
+     *
      * @return QueryBuilder
      */
     public function queryAll(): QueryBuilder
@@ -76,7 +84,19 @@ class RecordRepository extends ServiceEntityRepository
             ->leftJoin('borrowing.author', 'author');
     }
 
+
     /**
+     * @return QueryBuilder
+     */
+    public function queryAvailableRecord(): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->select('record')
+            ->where('record.amount' > 0);
+    }
+    /**
+     * Get or create new query builder
+     *
      * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query Builder
      *
      * @return \Doctrine\ORM\QueryBuilder QueryBuilder
@@ -85,6 +105,8 @@ class RecordRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('record');
     }
+
+
 
     // /**
     //  * @return Record[] Returns an array of Record objects

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Login form authenticator
+ */
 namespace App\Security;
 
 use App\Entity\User;

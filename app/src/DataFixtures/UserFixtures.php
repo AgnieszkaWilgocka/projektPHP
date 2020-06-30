@@ -33,6 +33,8 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
     }
 
     /**
+     * Load data
+     *
      * @param ObjectManager $manager
      */
     public function loadData(ObjectManager $manager): void
@@ -72,7 +74,10 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
         $manager->flush();
     }
     /**
-     * @return array
+     * Return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array Array of dependencies
      */
     public function getDependencies()
     {

@@ -18,11 +18,15 @@ use Knp\Component\Pager\PaginatorInterface;
 class TagService
 {
     /**
+     * Tag repository
+     *
      * @var TagRepository
      */
     private $tagRepository;
 
     /**
+     * Paginator
+     *
      * @var PaginatorInterface
      */
     private $paginator;
@@ -40,6 +44,8 @@ class TagService
     }
 
     /**
+     * Create paginated list
+     *
      * @param $page
      *
      * @return PaginationInterface
@@ -54,6 +60,8 @@ class TagService
     }
 
     /**
+     * Save tag
+     *
      * @param Tag $tag
      *
      * @throws ORMException
@@ -65,6 +73,8 @@ class TagService
     }
 
     /**
+     * Delete tag
+     *
      * @param Tag $tag
      *
      * @throws ORMException
@@ -75,6 +85,8 @@ class TagService
         $this->tagRepository->delete($tag);
     }
     /**
+     * Find by title
+     *
      * @param string $title
      *
      * @return Tag|null
@@ -83,7 +95,4 @@ class TagService
     {
         return $this->tagRepository->findOneByTitle($title);
     }
-
-
-
 }

@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Class User
+ *
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(
  *     name="users",
@@ -39,6 +41,8 @@ class User implements UserInterface
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
     /**
+     * Primary key
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -46,6 +50,8 @@ class User implements UserInterface
     private $id;
 
     /**
+     * Email
+     *
      * @ORM\Column(type="string", length=180, unique=true)
      *
      * @Assert\Email(
@@ -57,11 +63,15 @@ class User implements UserInterface
     private $email;
 
     /**
+     * Roles
+     *
      * @ORM\Column(type="json")
      */
     private $roles = [];
 
     /**
+     * Password
+     *
      * @var string The hashed password
      *
      * @ORM\Column(type="string")
@@ -77,6 +87,8 @@ class User implements UserInterface
     private $password;
 
     /**
+     * User data
+     *
      * @ORM\OneToOne(targetEntity=UserData::class, cascade={"persist", "remove"})
      */
     private $userData;
@@ -115,6 +127,8 @@ class User implements UserInterface
     }
 
     /**
+     * Getter for user name
+     *
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -193,7 +207,7 @@ class User implements UserInterface
     }
 
     /**
-     * Getter for UserData
+     * Getter for User data
      *
      * @return UserData|null
      */
@@ -203,7 +217,7 @@ class User implements UserInterface
     }
 
     /**
-     * Setter for UserData
+     * Setter for User data
      *
      * @param UserData|null $userData
      */
@@ -211,5 +225,4 @@ class User implements UserInterface
     {
         $this->userData = $userData;
     }
-
 }

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Edit data
+    {{'action_change_data'|trans}}
 {% endblock %}
 
 
@@ -10,14 +10,14 @@
     <div class="container">
     <div class="card border-0 shadow my-5">
     <div class="card-body p-5">
-    <h1>Edit data</h1>
+    <h1>{{'action_change_data'|trans}}</h1>
 
     {{ form_start(form, {method: 'PUT', action: url('user_data_edit', {id: userData.id}) }) }}
     {{ form_widget(form) }}
 
 
     <div class="form-group row float-sm-right">
-        <input type="submit" value="edit" class="btn btn-primary" >
+        <input type="submit" value="{{'action_save'|trans}}" class="btn btn-primary" >
     </div>
 
     <div class="form-group row float-sm-left">

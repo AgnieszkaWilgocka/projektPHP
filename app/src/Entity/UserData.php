@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Class User data
+ *
  * @ORM\Entity(repositoryClass=UserDataRepository::class)
  * @ORM\Table(name="users_data")
  *
@@ -18,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UserData
 {
     /**
+     * Primary key
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -25,6 +29,8 @@ class UserData
     private $id;
 
     /**
+     * Nick
+     *
      * @ORM\Column(type="string", length=45, nullable=true)
      *
      *

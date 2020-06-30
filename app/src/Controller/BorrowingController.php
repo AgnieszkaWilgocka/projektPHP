@@ -50,7 +50,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
-     * /**
+     * Manage borrowing action
+     *
      * @param Request $request
      *
      * @return Response
@@ -75,6 +76,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
+     *  My borrowing action
+     *
      * @param Request $request
      * @param User    $user
      *
@@ -105,6 +108,8 @@ class BorrowingController extends AbstractController
 
 
     /**
+     * Create borrowing
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @return Response
@@ -127,7 +132,7 @@ class BorrowingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $record = $form->get('record')->getData();
-            if ($record->getAmount() == 0 ) {
+            if ($record->getAmount() == 0) {
 
                 $this->addFlash('warning', 'sorry, but this record is not available');
 
@@ -155,6 +160,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
+     * Accept borrowing function
+     *
      * @param Request   $request
      * @param Borrowing $borrowing
      *
@@ -195,6 +202,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
+     * Decline borrowing
+     *
      * @param Request   $request
      * @param Borrowing $borrowing
      *
@@ -242,6 +251,8 @@ class BorrowingController extends AbstractController
     }
 
     /**
+     * Return borrowing
+     *
      * @param Request   $request
      * @param Borrowing $borrowing
      *

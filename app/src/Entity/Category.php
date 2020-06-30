@@ -12,6 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Class Category
+ *
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @ORM\Table(name="categories")
  *
@@ -49,6 +51,8 @@ class Category
     private $name;
 
     /**
+     * Records
+     *
      * @ORM\OneToMany(targetEntity=Record::class, mappedBy="category")
      *
      */
@@ -93,6 +97,8 @@ class Category
     }
 
     /**
+     * Getter for the records
+     *
      * @return Collection|Record[]
      */
     public function getRecords(): Collection
@@ -101,6 +107,8 @@ class Category
     }
 
     /**
+     * Add for record
+     *
      * @param Record $record
      *
      * @return $this
@@ -116,6 +124,8 @@ class Category
     }
 
     /**
+     * Remove for record
+     *
      * @param Record $record
      *
      * @return $this

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-View record
+{{ 'record_view'|trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -17,9 +17,9 @@ View record
     {% if record is defined and record|length %}
 
     <dl>
-        <dt>Category</dt>
+        <dt>{{'label_category'|trans}}</dt>
         <dd>{{ record.category.name }}</dd>
-        <dt>Tags</dt>
+        <dt>{{'label_tags'|trans}}</dt>
         {% for tags in record.tags %}
             <dd><a href="{{ url('tag_searching', {id: tags.id}) }}">{{ tags.title }}</a></dd>
         {% endfor %}

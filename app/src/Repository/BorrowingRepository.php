@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Borrowing Repository
+ */
 namespace App\Repository;
 
 use App\Entity\Borrowing;
@@ -9,6 +12,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * Class BorrowingRepository
+ *
  * @method Borrowing|null find($id, $lockMode = null, $lockVersion = null)
  * @method Borrowing|null findOneBy(array $criteria, array $orderBy = null)
  * @method Borrowing[]    findAll()
@@ -28,6 +33,8 @@ class BorrowingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Save borrowing
+     *
      * @param Borrowing $borrowing
      *
      * @throws \Doctrine\ORM\ORMException
@@ -40,6 +47,8 @@ class BorrowingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Delete borrowing
+     *
      * @param Borrowing $borrowing
      *
      * @throws \Doctrine\ORM\ORMException
@@ -52,6 +61,8 @@ class BorrowingRepository extends ServiceEntityRepository
     }
 
     /**
+     * Query borrowings by author
+     *
      * @param UserInterface $user
      *
      * @return QueryBuilder
@@ -65,6 +76,8 @@ class BorrowingRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
     /**
+     * Query all borrowings
+     *
      * @return QueryBuilder
      */
     public function queryAll()
@@ -80,6 +93,8 @@ class BorrowingRepository extends ServiceEntityRepository
 
 
     /**
+     * Get or create new query builder
+     *
      * @param QueryBuilder|null $queryBuilder
      *
      * @return QueryBuilder

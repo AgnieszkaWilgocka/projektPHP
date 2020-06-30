@@ -12,6 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Class Tag
+ *
  * @ORM\Entity(repositoryClass=TagRepository::class)
  * @ORM\Table(name="tags")
  *
@@ -43,6 +45,8 @@ class Tag
     private $title;
 
     /**
+     * Records
+     *
      * @ORM\ManyToMany(targetEntity=Record::class, mappedBy="tags")
      */
     private $records;
@@ -86,6 +90,8 @@ class Tag
     }
 
     /**
+     * Getter for the records
+     *
      * @return Collection|Record[]
      */
     public function getRecords(): Collection
@@ -94,6 +100,8 @@ class Tag
     }
 
     /**
+     * Add for record
+     *
      * @param Record $record
      *
      * @return $this
@@ -109,6 +117,8 @@ class Tag
     }
 
     /**
+     * Remove for record
+     *
      * @param Record $record
      *
      * @return $this

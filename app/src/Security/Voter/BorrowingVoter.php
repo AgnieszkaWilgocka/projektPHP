@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Borrowing voter
+ *
+ */
 namespace App\Security\Voter;
 
 use App\Entity\Borrowing;

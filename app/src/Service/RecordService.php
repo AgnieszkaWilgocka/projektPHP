@@ -14,17 +14,19 @@ use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class RecordService
- *
- * @package App\Service
  */
 class RecordService
 {
     /**
+     * Record repository
+     *
      * @var RecordRepository
      */
     private $recordRepository;
 
     /**
+     * Paginator
+     *
      * @var PaginatorInterface
      */
     private $paginator;
@@ -42,6 +44,8 @@ class RecordService
     }
 
     /**
+     * Create paginated list
+     *
      * @param int $page
      *
      * @return PaginationInterface
@@ -56,6 +60,8 @@ class RecordService
     }
 
     /**
+     * Save record
+     *
      * @param Record $record
      *
      * @throws ORMException
@@ -67,6 +73,8 @@ class RecordService
     }
 
     /**
+     * Delete record
+     *
      * @param Record $record
      *
      * @throws ORMException

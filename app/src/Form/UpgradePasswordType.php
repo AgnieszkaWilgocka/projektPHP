@@ -17,6 +17,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UpgradePasswordType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
@@ -30,11 +34,21 @@ class UpgradePasswordType extends AbstractType
         );
     }
 
+    /**
+     * Configure the options for this type
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['data_class' => User::class]);
     }
 
+    /**
+     * Returns the prefix of the template block name for this type
+     *
+     * @return string The prefix of the template block name
+     */
     public function getBlockPrefix()
     {
         return 'user';

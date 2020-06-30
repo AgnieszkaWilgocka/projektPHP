@@ -19,11 +19,15 @@ class CategoryService
 {
 
     /**
+     * Category repository
+     *
      * @var \App\Repository\CategoryRepository
      */
     private $categoryRepository;
 
     /**
+     * Paginator
+     *
      * @var \Knp\Component\Pager\PaginatorInterface
      */
     private $paginator;
@@ -41,6 +45,8 @@ class CategoryService
     }
 
     /**
+     * Create paginated list
+     *
      * @param int $page
      *
      * @return PaginationInterface
@@ -55,6 +61,8 @@ class CategoryService
     }
 
     /**
+     * Save category
+     *
      * @param Category $category
      *
      * @throws ORMException
@@ -66,6 +74,8 @@ class CategoryService
     }
 
     /**
+     * Delete category
+     *
      * @param Category $category
      *
      * @throws ORMException

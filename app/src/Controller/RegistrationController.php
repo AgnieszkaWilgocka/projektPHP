@@ -8,8 +8,6 @@ namespace App\Controller;
 use App\Form\RegistrationType;
 use App\Entity\User;
 use App\Entity\UserData;
-use App\Repository\UserDataRepository;
-use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use App\Service\UserDataService;
 use App\Service\UserService;
@@ -26,11 +24,15 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 class RegistrationController extends AbstractController
 {
     /**
+     * User service
+     *
      * @var UserService
      */
     private $userService;
 
     /**
+     * User data service
+     *
      * @var UserDataService
      */
     private $userDataService;
@@ -48,7 +50,8 @@ class RegistrationController extends AbstractController
     }
 
     /**
-
+     * Register action
+     *
      * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param GuardAuthenticatorHandler    $authenticatorHandler

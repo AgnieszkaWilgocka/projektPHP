@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * User repository
+ *
+ */
 namespace App\Repository;
 
 use App\Entity\User;
@@ -11,6 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use \Doctrine\ORM\QueryBuilder;
 
 /**
+ * Class UserRepository
+ *
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
@@ -31,15 +37,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-//    public function selectUser()
-//    {
-//        $queryBuilder = $this->getOrCreateQueryBuilder();
-//        $queryBuilder->select()->andWhere()
-//
-//    }
-
-
     /**
+     * Upgrade password
+     *
      * Used to upgrade (rehash) the user's password automatically over time.
      *
      * @param UserInterface $user
@@ -60,6 +60,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * Save user
+     *
      * @param User $user
      *
      * @throws \Doctrine\ORM\ORMException
@@ -73,6 +75,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
     /**
+     * Query all users
+     *
      * @return QueryBuilder
      */
     public function queryAll(): QueryBuilder
@@ -82,6 +86,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
     /**
+     * Get or create new query builder
+     *
      * @param QueryBuilder|null $queryBuilder
      *
      * @return QueryBuilder

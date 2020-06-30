@@ -46,6 +46,14 @@
                 <source>action_login</source>
                 <target>Login</target>
             </trans-unit>
+            <trans-unit id="action_return">
+                <source>action_return</source>
+                <target>Return</target>
+            </trans-unit>
+            <trans-unit id="action_save">
+                <source>action_save</source>
+                <target>Save</target>
+            </trans-unit>
             <trans-unit id="action_set_nick">
                 <source>action_set_nick</source>
                 <target>Set nick</target>
@@ -61,6 +69,10 @@
             <trans-unit id="action_view">
                 <source>action_view</source>
                 <target>View</target>
+            </trans-unit>
+            <trans-unit id="Confirm new password">
+                <source>Confirm new password</source>
+                <target>Confirm new password</target>
             </trans-unit>
             <trans-unit id="label_account">
                 <source>label_account</source>
@@ -78,6 +90,10 @@
                 <source>label_borrowing</source>
                 <target>Borrowing</target>
             </trans-unit>
+            <trans-unit id="label_category">
+                <source>label_category</source>
+                <target>Category</target>
+            </trans-unit>
             <trans-unit id="label_comment">
                 <source>label_comment</source>
                 <target>Comment</target>
@@ -94,13 +110,21 @@
                 <source>label_manage</source>
                 <target>Manage</target>
             </trans-unit>
+            <trans-unit id="label_my_borrowings">
+                <source>label_my_borrowings</source>
+                <target>My borrowings</target>
+            </trans-unit>
             <trans-unit id="label_name">
                 <source>label_name</source>
                 <target>Name</target>
             </trans-unit>
-            <trans-unit id="label_my_borrowings">
-                <source>label_my_borrowings</source>
-                <target>My borrowings</target>
+            <trans-unit id="label_nick">
+                <source>label_nick</source>
+                <target>Nick</target>
+            </trans-unit>
+            <trans-unit id="label_password">
+                <source>label_password</source>
+                <target>Password</target>
             </trans-unit>
             <trans-unit id="label_records">
                 <source>label_records</source>
@@ -109,10 +133,6 @@
             <trans-unit id="label_registration">
                 <source>label_registration</source>
                 <target>Registration</target>
-            </trans-unit>
-            <trans-unit id="label_return">
-                <source>label_return</source>
-                <target>Return</target>
             </trans-unit>
             <trans-unit id="label_tags">
                 <source>label_tags</source>
@@ -138,9 +158,21 @@
                 <source>message_empty_list</source>
                 <target>Empty list.</target>
             </trans-unit>
+            <trans-unit id="New password">
+                <source>New password</source>
+                <target>New password</target>
+            </trans-unit>
+            <trans-unit id="admin_accept">
+                <source>admin_accept</source>
+                <target>Your borrowing is in process</target>
+            </trans-unit>
             <trans-unit id="record_view">
                 <source>record_view</source>
                 <target>Record view</target>
+            </trans-unit>
+            <trans-unit id="rental_store">
+                <source>rental_store</source>
+                <target>Rental store</target>
             </trans-unit>
             <trans-unit id="tag_view">
                 <source>tag_view</source>

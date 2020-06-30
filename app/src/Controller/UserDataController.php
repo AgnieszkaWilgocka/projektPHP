@@ -7,7 +7,6 @@ namespace App\Controller;
 
 use App\Entity\UserData;
 use App\Form\UserDataType;
-use App\Repository\UserDataRepository;
 use App\Service\UserDataService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserDataController extends AbstractController
 {
     /**
+     * User data service
+     *
      * @var UserDataService
      */
     private $userDataService;
@@ -37,6 +38,8 @@ class UserDataController extends AbstractController
     }
 
     /**
+     * Edit user data
+     *
      * @param Request  $request
      * @param UserData $userData
      *

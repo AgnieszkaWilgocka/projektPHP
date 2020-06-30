@@ -8,7 +8,6 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\TagType;
 use App\Service\TagService;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -24,7 +23,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TagController extends AbstractController
 {
-
+    /**
+     * Tag service
+     *
+     * @var TagService
+     */
     private $tagService;
 
     /**
@@ -38,9 +41,9 @@ class TagController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP Request
-     * @param \App\Repository\TagRepository             $tagRepository Tag repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator     Paginator
+     * Index action
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -64,6 +67,8 @@ class TagController extends AbstractController
     }
 
     /**
+     * Tag searching
+     *
      * @param Tag $tag
      *
      * @return Response
@@ -85,8 +90,9 @@ class TagController extends AbstractController
 
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP Request
-     * @param \App\Repository\TagRepository             $tagRepository Tag repository
+     * Create tag
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -124,9 +130,10 @@ class TagController extends AbstractController
 
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP Request
-     * @param \App\Entity\Tag                           $tag           Tag entity
-     * @param \App\Service\TagService                   $tagService    Tag service
+     * Edit tag
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
+     * @param \App\Entity\Tag                           $tag     Tag entity
      *
      * @return Response
      *
@@ -164,9 +171,10 @@ class TagController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP Request
-     * @param \App\Entity\Tag                           $tag           Entity tag
-     * @param \App\Repository\TagRepository             $tagRepository Tag repository
+     * Delete tag
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
+     * @param \App\Entity\Tag                           $tag     Entity tag
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *

@@ -10,6 +10,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class UserDataRepository
+ *
  * @method UserData|null find($id, $lockMode = null, $lockVersion = null)
  * @method UserData|null findOneBy(array $criteria, array $orderBy = null)
  * @method UserData[]    findAll()
@@ -28,6 +30,8 @@ class UserDataRepository extends ServiceEntityRepository
     }
 
     /**
+     * Save user data
+     *
      * @param UserData $userData
      *
      * @throws \Doctrine\ORM\ORMException

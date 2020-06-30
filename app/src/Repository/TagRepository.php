@@ -11,6 +11,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class TagRepository
+ *
  * @method Tag|null find($id, $lockMode = null, $lockVersion = null)
  * @method Tag|null findOneBy(array $criteria, array $orderBy = null)
  * @method Tag[]    findAll()
@@ -32,6 +34,8 @@ class TagRepository extends ServiceEntityRepository
 
 
     /**
+     * Save tag
+     *
      * @param \App\Entity\Tag $tag Tag entity
      *
      * @throws \Doctrine\ORM\ORMException
@@ -45,6 +49,8 @@ class TagRepository extends ServiceEntityRepository
 
 
     /**
+     * Delete tag
+     *
      * @param \App\Entity\Tag $tag Tag entity
      *
      * @throws \Doctrine\ORM\ORMException
@@ -57,6 +63,8 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
+     * Query all tags
+     *
      * @return \Doctrine\ORM\QueryBuilder Query builder
     */
     public function queryAll(): QueryBuilder
@@ -66,6 +74,8 @@ class TagRepository extends ServiceEntityRepository
 
 
     /**
+     * Get or create new query builder
+     *
      * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder

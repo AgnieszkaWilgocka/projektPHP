@@ -14,6 +14,8 @@ use Doctrine\Persistence\ObjectManager;
 class CategoryFixtures extends AbstractBaseFixtures
 {
     /**
+     * Load data
+     *
      * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
      */
     public function loadData(ObjectManager $manager): void

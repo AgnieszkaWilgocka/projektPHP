@@ -14,6 +14,8 @@ use Doctrine\Persistence\ObjectManager;
 class BorrowingFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
+     * Load data
+     *
      * @param \Doctrine\Persistence\ObjectManager $manager Object manager
      */
     public function loadData(ObjectManager $manager): void
@@ -33,6 +35,9 @@ class BorrowingFixtures extends AbstractBaseFixtures implements DependentFixture
     }
 
     /**
+     * Return an array of fixtures classes
+     * on which the implementing class depends on
+     *
      * @return array Array of dependencies
      */
     public function getDependencies(): array

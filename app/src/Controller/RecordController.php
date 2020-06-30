@@ -10,6 +10,7 @@ use App\Form\RecordType;
 use App\Service\RecordService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 class RecordController extends AbstractController
 {
     /**
+     * Record service
+     *
      * @var RecordService
      */
     private $recordService;
@@ -86,7 +89,9 @@ class RecordController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
+     * Create record
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      *
@@ -125,6 +130,8 @@ class RecordController extends AbstractController
     }
 
     /**
+     * Edit record
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request HTPP request
      * @param \App\Entity\Record                        $record  Record entity
      *
@@ -169,6 +176,8 @@ class RecordController extends AbstractController
     }
 
     /**
+     * Delete record
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      * @param \App\Entity\Record                        $record  Record entity
      *
@@ -193,7 +202,7 @@ class RecordController extends AbstractController
 
             return $this->redirectToRoute('record_index');
         }
-        $form = $this->createForm(RecordType::class, $record, ['method' => 'DELETE']);
+        $form = $this->createForm(FormType::class, $record, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {

@@ -18,11 +18,15 @@ use Knp\Component\Pager\PaginatorInterface;
 class BorrowingService
 {
     /**
+     * Borrowing repository
+     *
      * @var BorrowingRepository
      */
     private $borrowingRepository;
 
     /**
+     * Paginator
+     *
      * @var PaginatorInterface
      */
     private $paginator;
@@ -40,6 +44,8 @@ class BorrowingService
     }
 
     /**
+     * Created paginated list
+     *
      * @param int $page
      *
      * @return PaginationInterface
@@ -54,6 +60,8 @@ class BorrowingService
     }
 
     /**
+     * Created paginated list by author
+     *
      * @param int  $page
      * @param User $user
      *
@@ -69,6 +77,8 @@ class BorrowingService
     }
 
     /**
+     * Save borrowing
+     *
      * @param Borrowing $borrowing
      *
      * @throws ORMException
@@ -80,6 +90,8 @@ class BorrowingService
     }
 
     /**
+     * Delete borrowing
+     *
      * @param Borrowing $borrowing
      *
      * @throws ORMException

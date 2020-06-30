@@ -14,6 +14,8 @@ use Doctrine\Persistence\ObjectManager;
 class TagFixtures extends AbstractBaseFixtures
 {
     /**
+     * Load data
+     *
      * @param \Doctrine\Persistence\ObjectManager $manager Object manager
      */
     public function loadData(ObjectManager $manager): void
@@ -26,5 +28,4 @@ class TagFixtures extends AbstractBaseFixtures
         });
         $manager->flush();
     }
-
 }

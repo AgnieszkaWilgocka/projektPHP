@@ -14,6 +14,8 @@ use Doctrine\Persistence\ObjectManager;
 class RecordFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
+     * Load data
+     *
      * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
      */
     public function loadData(ObjectManager $manager): void
@@ -38,7 +40,10 @@ class RecordFixtures extends AbstractBaseFixtures implements DependentFixtureInt
     }
 
     /**
-     * @inheritDoc
+     * Return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array Array of dependencies
      */
     public function getDependencies()
     {
