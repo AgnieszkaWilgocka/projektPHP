@@ -5,7 +5,9 @@
  */
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Record;
+use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
@@ -73,26 +75,36 @@ class RecordRepository extends ServiceEntityRepository
     /**
      * Query all records
      *
-     * @return QueryBuilder
+     * @param array $filters Filters array
+     *
+     * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(array $filters = []): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
-            ->select('record', 'category', 'borrowing', 'author')
+        $queryBuilder = $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial record.{id, title, amount}',
+                'partial category.{id, name}',
+                'partial borrowing.{id}',
+                'partial tags.{id, title}'
+            )
             ->innerJoin('record.category', 'category')
             ->leftJoin('record.borrowings', 'borrowing')
-            ->leftJoin('borrowing.author', 'author');
+            ->leftJoin('record.tags', 'tags');
+        $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);
+
+        return $queryBuilder;
     }
 
-
     /**
-     * @return QueryBuilder
+     * Query available records
+     *
+     * @return QueryBuilder Query builder
      */
-    public function queryAvailableRecord(): QueryBuilder
+    public function queryAvailableRecords(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select('record')
-            ->where('record.amount' > 0);
+            ->where('record.amount > 0');
     }
     /**
      * Get or create new query builder
@@ -106,7 +118,28 @@ class RecordRepository extends ServiceEntityRepository
         return $queryBuilder ?? $this->createQueryBuilder('record');
     }
 
+    /**
+     * Apply filters to paginated list
+     *
+     * @param QueryBuilder $queryBuilder Query builder
+     * @param array        $filters      Filters array
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['category']) && $filters['category'] instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters['category']);
+        }
 
+        if (isset($filters['tag']) && $filters['tag'] instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters['tag']);
+        }
+
+        return $queryBuilder;
+    }
 
     // /**
     //  * @return Record[] Returns an array of Record objects

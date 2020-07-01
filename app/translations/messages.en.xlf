@@ -154,9 +154,49 @@
                 <source>manage_borrowings</source>
                 <target>Manage borrowings</target>
             </trans-unit>
+            <trans-unit id="message_account_create">
+                <source>message_account_create</source>
+                <target>Your account has been created</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_accept">
+                <source>message_borrowing_accept</source>
+                <target>Borrowing accepted</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_decline">
+                <source>message_borrowing_decline</source>
+                <target>Borrowing declined</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_return">
+                <source>message_borrowing_return</source>
+                <target>Borrowing returned</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_send">
+                <source>message_borrowing_send</source>
+                <target>Your borrowing has sent successfully</target>
+            </trans-unit>
+            <trans-unit id="message_category_contains_records">
+                <source>message_category_contains_records</source>
+                <target>This category contains records</target>
+            </trans-unit>
+            <trans-unit id="message_create">
+                <source>message_create</source>
+                <target>Created successfully</target>
+            </trans-unit>
+            <trans-unit id="message_delete">
+                <source>message_delete</source>
+                <target>Deleted successfully</target>
+            </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
                 <target>Empty list.</target>
+            </trans-unit>
+            <trans-unit id="message_record_is_already_borrowed">
+                <source>message_record_is_already_borrowed</source>
+                <target>This record is already borrowed</target>
+            </trans-unit>
+            <trans-unit id="message_update">
+                <source>message_update</source>
+                <target>Updated successfully</target>
             </trans-unit>
             <trans-unit id="New password">
                 <source>New password</source>

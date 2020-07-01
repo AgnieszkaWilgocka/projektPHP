@@ -89,7 +89,7 @@ class RegistrationController extends AbstractController
             $this->userDataService->save($userData);
 
 
-            $this->addFlash('success', 'Your account has been created successfully');
+            $this->addFlash('success', 'message_account_create');
 
             return $authenticatorHandler->authenticateUserAndHandleSuccess(
                 $user,

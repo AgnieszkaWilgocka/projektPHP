@@ -154,9 +154,49 @@
                 <source>manage_borrowings</source>
                 <target>Zarządzanie wypożyczeniami</target>
             </trans-unit>
+            <trans-unit id="message_account_create">
+                <source>message_account_create</source>
+                <target>Twoje konto zostało utworzone pomyślnie</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_accept">
+                <source>message_borrowing_accept</source>
+                <target>Zaakceptowano wypożyczenie</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_decline">
+                <source>message_borrowing_decline</source>
+                <target>Odrzucono wypożyczenie</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_return">
+                <source>message_borrowing_return</source>
+                <target>Zwrócono wypożyczenie</target>
+            </trans-unit>
+            <trans-unit id="message_borrowing_send">
+                <source>message_borrowing_send</source>
+                <target>Wypożyczenie zostało złożone pomyślnie</target>
+            </trans-unit>
+            <trans-unit id="message_category_contains_records">
+                <source>message_category_contains_records</source>
+                <target>Ta kategoria zawiera płyty</target>
+            </trans-unit>
+            <trans-unit id="message_create">
+                <source>message_create</source>
+                <target>Utworzono pomyślnie</target>
+            </trans-unit>
+            <trans-unit id="message_delete">
+                <source>message_delete</source>
+                <target>Usunięto pomyślnie</target>
+            </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
                 <target>Pusta lista.</target>
+            </trans-unit>
+            <trans-unit id="message_record_is_already_borrowed">
+                <source>message_record_is_already_borrowed</source>
+                <target>Ta płyta jest aktualnie wypożyczana</target>
+            </trans-unit>
+            <trans-unit id="message_update">
+                <source>message_update</source>
+                <target>Zaktualizowano pomyślnie</target>
             </trans-unit>
             <trans-unit id="New password">
                 <source>New password</source>

@@ -17,6 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BorrowingType extends AbstractType
 {
+    /**
+     * Record repository
+     *
+     * @var RecordRepository
+     */
     private $recordRepository;
 
     /**
@@ -42,10 +47,8 @@ class BorrowingType extends AbstractType
             EntityType::class,
             [
                 'class' => Record::class,
-                [
-                'choices' => $this->recordRepository->queryAvailableRecord(),
-                ],
-                'label' => 'label_records',
+                'choice_label' => 'title',
+                'query_builder' => $this->recordRepository->queryAvailableRecords(),
                 'required' => true,
                 'placeholder' => 'choice_record',
             ]

@@ -83,5 +83,4 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
     {
         return [UserDataFixtures::class];
     }
-
 }

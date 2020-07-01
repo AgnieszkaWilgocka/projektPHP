@@ -55,8 +55,14 @@ class RecordController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $page = $request->query->getInt('page', '1');
-        $pagination = $this->recordService->createPaginatedList($page);
+        $filters = [];
+        $filters['category_id'] = $request->query->getInt('filters_category_id');
+        $filters['tag_id'] = $request->query->getInt('filters_tag_id');
+
+        $pagination = $this->recordService->createPaginatedList(
+            $request->query->getInt('page', 1),
+            $filters,
+        );
 
         return $this->render(
             'record/index.html.twig',
@@ -114,7 +120,7 @@ class RecordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->recordService->save($record);
 
-            $this->addFlash('success', 'record_created_successfully');
+            $this->addFlash('success', 'message_create');
 
             return $this->redirectToRoute('record_index');
         }
@@ -151,7 +157,7 @@ class RecordController extends AbstractController
     public function edit(Request $request, Record $record): Response
     {
         if ($record->getBorrowings()->count()) {
-            $this->addFlash('warning', 'record_is_already_borrowed');
+            $this->addFlash('warning', 'message_record_is_already_borrowed');
 
             return $this->redirectToRoute('record_index');
         }
@@ -161,7 +167,7 @@ class RecordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->recordService->save($record);
 
-            $this->addFlash('success', 'record_edited_successfully');
+            $this->addFlash('success', 'message_update');
 
             return $this->redirectToRoute('record_index');
         }
@@ -198,7 +204,7 @@ class RecordController extends AbstractController
     public function delete(Request $request, Record $record): Response
     {
         if ($record->getBorrowings()->count()) {
-            $this->addFlash('warning', 'someone_is_borrowing_this_record');
+            $this->addFlash('warning', 'message_record_is_already_borrowed');
 
             return $this->redirectToRoute('record_index');
         }
@@ -212,7 +218,7 @@ class RecordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->recordService->delete($record);
 
-            $this->addFlash('success', 'record_deleted_successfully');
+            $this->addFlash('success', 'message_delete');
 
             return $this->redirectToRoute('record_index');
         }

@@ -83,9 +83,13 @@ class BorrowingRepository extends ServiceEntityRepository
     public function queryAll()
     {
         return $this->getOrCreateQueryBuilder()
-        ->select('borrowing', 'record', 'author')
+        ->select(
+            'borrowing',
+            'partial record.{id, title}',
+            'partial author.{id, email}'
+        )
             ->innerJoin('borrowing.record', 'record')
-            ->innerJoin('borrowing.author', 'author')
+            ->leftJoin('borrowing.author', 'author')
         ->orderBy('borrowing.createdAt', 'DESC');
     }
 

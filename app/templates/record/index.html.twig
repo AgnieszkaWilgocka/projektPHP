@@ -20,6 +20,7 @@
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'record.title') }}</th>
                 <th>{{'title_category_list'|trans}}</th>
+                <th>{{ 'label_tags'|trans }} </th>
                 <th>{{'label_actions'|trans}}</th>
             </tr>
         </thead>
@@ -27,7 +28,20 @@
         {% for record in pagination.items %}
             <tr>
                 <td>{{ record.title }}</td>
-                <td>{{ record.category.name }}</td>
+                <td>
+                    <a href="{{ url('record_index', {'filters.category_id' : record.category.id}) }}" title="{{ record.category.name }}">
+                        {{ record.category.name }}
+                    </a>
+                </td>
+                <td>
+                    {% if record.tags is defined and record.tags|length %}
+                    {% for tag in record.tags %}
+                    <a href="{{ url('record_index', {'filters.tag_id' : tag.id }) }}" title="{{ tag.title }}">
+                        {{ tag.title }}
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                </td>
                 <td>
                     <a class = "text-info" href="{{ url('record_show', { 'id': record.id }) }}" title="{{ 'action_view'|trans }}">
                         {{ 'action_view'|trans }}
@@ -37,6 +51,7 @@
                         {{'action_edit'|trans}}
                     </a>
                     {% endif %}
+
                     {% if not record.borrowings|length %}
                     {% if is_granted('ROLE_ADMIN') %}
                     <a class="text-danger" href="{{ url('record_delete', {'id': record.id}) }}" title="{{'action_delete'|trans}}">

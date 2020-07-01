@@ -18,10 +18,18 @@
 
     <dl>
         <dt>{{'label_category'|trans}}</dt>
-        <dd>{{ record.category.name }}</dd>
+        <dd>
+            <a href="{{ url('record_index', {'filters.category_id' : record.category.id}) }}" title="{{ record.category.name }}">
+                {{ record.category.name }}
+            </a>
+        </dd>
         <dt>{{'label_tags'|trans}}</dt>
         {% for tags in record.tags %}
-            <dd><a href="{{ url('tag_searching', {id: tags.id}) }}">{{ tags.title }}</a></dd>
+            <dd>
+                <a href="{{ url('record_index', {'filters.tag_id' : tags.id}) }}" title="{{ tags.title }}">
+                    {{ tags.title }}
+                </a>
+            </dd>
         {% endfor %}
         <dd>
             <a class="btn btn-outline-primary" href="{{ url('record_index') }}" title="{{ 'action_back_to_list'|trans }}">

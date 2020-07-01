@@ -25,6 +25,20 @@ class RecordService
     private $recordRepository;
 
     /**
+     * Category service
+     *
+     * @var CategoryService
+     */
+    private $categoryService;
+
+    /**
+     * Tag service
+     *
+     * @var TagService
+     */
+    private $tagService;
+
+    /**
      * Paginator
      *
      * @var PaginatorInterface
@@ -36,24 +50,31 @@ class RecordService
      *
      * @param RecordRepository   $recordRepository
      * @param PaginatorInterface $paginator
+     * @param CategoryService    $categoryService
+     * @param TagService         $tagService
      */
-    public function __construct(RecordRepository $recordRepository, PaginatorInterface $paginator)
+    public function __construct(RecordRepository $recordRepository, PaginatorInterface $paginator, CategoryService $categoryService, TagService $tagService)
     {
         $this->recordRepository = $recordRepository;
         $this->paginator = $paginator;
+        $this->categoryService = $categoryService;
+        $this->tagService = $tagService;
     }
 
     /**
      * Create paginated list
      *
-     * @param int $page
+     * @param int   $page    Page number
+     * @param array $filters Filters array
      *
-     * @return PaginationInterface
+     * @return PaginationInterface Paginated list
      */
-    public function createPaginatedList(int $page): PaginationInterface
+    public function createPaginatedList(int $page, array $filters = []): PaginationInterface
     {
+        $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
-            $this->recordRepository->queryAll(),
+            $this->recordRepository->queryAll($filters),
             $page,
             RecordRepository::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -83,5 +104,38 @@ class RecordService
     public function delete(Record $record): void
     {
         $this->recordRepository->delete($record);
+    }
+
+    /**
+     * Prepare filters for the records list
+     *
+     * @param array $filters
+     *
+     * @return array
+     */
+    private function prepareFilters(array $filters): array
+    {
+        $resultFilters = [];
+
+        if (isset($filters['category_id']) && is_numeric($filters['category_id'])) {
+            $category = $this->categoryService->findOneById(
+                $filters['category_id']
+            );
+            if (null !== $category) {
+                $resultFilters['category'] = $category;
+            }
+        }
+
+        if (isset($filters['tag_id']) && is_numeric($filters['tag_id'])) {
+            $tag = $this->tagService->findOneById(
+                $filters['tag_id']
+            );
+
+            if (null !== $tag) {
+                $resultFilters['tag'] = $tag;
+            }
+        }
+
+        return $resultFilters;
     }
 }

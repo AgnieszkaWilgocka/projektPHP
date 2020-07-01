@@ -45,6 +45,18 @@ class CategoryService
     }
 
     /**
+     * Find category by Id
+     *
+     * @param int $id
+     *
+     * @return Category|null
+     */
+    public function findOneById(int $id): ?Category
+    {
+        return $this->categoryRepository->findOneById($id);
+    }
+
+    /**
      * Create paginated list
      *
      * @param int $page

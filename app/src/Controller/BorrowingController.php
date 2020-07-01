@@ -132,12 +132,11 @@ class BorrowingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $record = $form->get('record')->getData();
-            if ($record->getAmount() == 0) {
-
-                $this->addFlash('warning', 'sorry, but this record is not available');
-
-                return $this->redirectToRoute('borrowing_create');
-            }
+//            if ($record->getAmount() == 0) {
+//                $this->addFlash('warning', 'sorry, but this record is not available');
+//
+//                return $this->redirectToRoute('borrowing_create');
+//            }
             $record->setAmount($record->getAmount()-1);
             $borrowing->setAuthor($this->getUser());
             $borrowing->setCreatedAt(new \DateTime());
@@ -145,7 +144,7 @@ class BorrowingController extends AbstractController
             $this->recordService->save($record);
             $this->borrowingService->save($borrowing);
 
-            $this->addFlash('success', 'your borrowing has sent');
+            $this->addFlash('success', 'message_borrowing_send');
 
             return $this->redirectToRoute('record_index');
         }
@@ -187,7 +186,7 @@ class BorrowingController extends AbstractController
             $borrowing->setIsExecuted(true);
             $this->borrowingService->save($borrowing);
 
-            $this->addFlash('success', 'order has been accepted');
+            $this->addFlash('success', 'message_borrowing_accept');
 
             return $this->redirectToRoute('manage_borrowing');
         }
@@ -236,7 +235,7 @@ class BorrowingController extends AbstractController
             $this->recordService->save($record);
             $this->borrowingService->delete($borrowing);
 
-            $this->addFlash('success', 'borrowing has been declined');
+            $this->addFlash('success', 'message_borrowing_decline');
 
             return $this->redirectToRoute('category_index');
         }
@@ -287,7 +286,7 @@ class BorrowingController extends AbstractController
             $this->recordService->save($record);
             $this->borrowingService->delete($borrowing);
 
-            $this->addFlash('success', 'your borrowing has been returned');
+            $this->addFlash('success', 'message_borrowing_return');
 
             return $this->redirectToRoute('record_index');
         }

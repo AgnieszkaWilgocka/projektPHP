@@ -70,7 +70,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select('category', 'record')
+            ->select('category', ' partial record.{id, title}')
             ->leftJoin('category.records', 'record');
     }
 

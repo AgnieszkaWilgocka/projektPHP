@@ -128,7 +128,7 @@ class UserController extends AbstractController
             );
 
             $this->userService->save($user);
-            $this->addFlash('success', 'password changed successfully');
+            $this->addFlash('success', 'message_update');
 
             return $this->redirectToRoute('category_index');
         }

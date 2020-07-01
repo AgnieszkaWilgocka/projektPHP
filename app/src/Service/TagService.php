@@ -44,6 +44,17 @@ class TagService
     }
 
     /**
+     * Find tag by Id
+     *
+     * @param int $id
+     *
+     * @return Tag|null
+     */
+    public function findOneById(int $id): ?Tag
+    {
+        return $this->tagRepository->findOneById($id);
+    }
+    /**
      * Create paginated list
      *
      * @param $page
