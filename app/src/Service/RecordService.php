@@ -7,8 +7,10 @@ namespace App\Service;
 
 use App\Entity\Record;
 use App\Repository\RecordRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -80,6 +82,24 @@ class RecordService
         );
     }
 
+    /**
+     * Query builder for all records
+     *
+     * @return QueryBuilder
+     */
+    public function getAllRecords(): QueryBuilder
+    {
+        return $this->recordRepository->getAllRecords();
+    }
+    /**
+     * Query builder for only available records
+     *
+     * @return QueryBuilder
+     */
+    public function getAvailableRecords():QueryBuilder
+    {
+        return $this->recordRepository->getAvailableRecords();
+    }
     /**
      * Save record
      *

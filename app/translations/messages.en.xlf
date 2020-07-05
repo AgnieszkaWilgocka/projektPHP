@@ -70,6 +70,14 @@
                 <source>action_view</source>
                 <target>View</target>
             </trans-unit>
+            <trans-unit id="choice_category">
+                <source>choice_category</source>
+                <target>choice category</target>
+            </trans-unit>
+            <trans-unit id="choice_record">
+                <source>choice_record</source>
+                <target>choice record</target>
+            </trans-unit>
             <trans-unit id="Confirm new password">
                 <source>Confirm new password</source>
                 <target>Confirm new password</target>
@@ -81,6 +89,10 @@
             <trans-unit id="label_actions">
                 <source>label_actions</source>
                 <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="label_amount">
+                <source>label_amount</source>
+                <target>Amount</target>
             </trans-unit>
             <trans-unit id="label_author">
                 <source>label_author</source>
@@ -133,6 +145,10 @@
             <trans-unit id="label_registration">
                 <source>label_registration</source>
                 <target>Registration</target>
+            </trans-unit>
+            <trans-unit id="label_repeat_password">
+                <source>label_repeat_password</source>
+                <target>Repeat password</target>
             </trans-unit>
             <trans-unit id="label_tags">
                 <source>label_tags</source>
@@ -201,10 +217,6 @@
             <trans-unit id="New password">
                 <source>New password</source>
                 <target>New password</target>
-            </trans-unit>
-            <trans-unit id="admin_accept">
-                <source>admin_accept</source>
-                <target>Your borrowing is in process</target>
             </trans-unit>
             <trans-unit id="record_view">
                 <source>record_view</source>

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+/**
+ * Doctrine migrations
+ */
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -12,11 +15,23 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200615150815 extends AbstractMigration
 {
+    /**
+     * Getter for description
+     *
+     * @return string
+     */
     public function getDescription() : string
     {
         return '';
     }
 
+    /**
+     * Function up
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -29,6 +44,13 @@ final class Version20200615150815 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_7371D29167B3B43D ON usersdata (users_id)');
     }
 
+    /**
+     * Function down
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs

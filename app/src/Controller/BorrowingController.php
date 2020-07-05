@@ -9,6 +9,7 @@ use App\Entity\Borrowing;
 use App\Entity\Record;
 use App\Entity\User;
 use App\Form\BorrowingType;
+use App\Repository\RecordRepository;
 use App\Service\BorrowingService;
 use App\Service\RecordService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -127,12 +128,12 @@ class BorrowingController extends AbstractController
     public function create(Request $request): Response
     {
         $borrowing = new Borrowing();
-        $form = $this->createForm(BorrowingType::class, $borrowing);
+        $form = $this->createForm(BorrowingType::class, $borrowing, ["show_all_records" => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $record = $form->get('record')->getData();
-//            if ($record->getAmount() == 0) {
+//            if ($record->getAmount() === 0) {
 //                $this->addFlash('warning', 'sorry, but this record is not available');
 //
 //                return $this->redirectToRoute('borrowing_create');
@@ -179,13 +180,12 @@ class BorrowingController extends AbstractController
      */
     public function accept(Request $request, Borrowing $borrowing): Response
     {
-        $form = $this->createForm(FormType::class, $borrowing, ['method' => 'PUT']);
+        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'PUT', "show_all_records" => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $borrowing->setIsExecuted(true);
             $this->borrowingService->save($borrowing);
-
             $this->addFlash('success', 'message_borrowing_accept');
 
             return $this->redirectToRoute('manage_borrowing');
@@ -221,7 +221,7 @@ class BorrowingController extends AbstractController
      */
     public function decline(Request $request, Borrowing $borrowing): Response
     {
-        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE']);
+        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE', "show_all_records" => true]);
         $form->handleRequest($request);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
@@ -273,7 +273,7 @@ class BorrowingController extends AbstractController
      */
     public function returnBorrowing(Request $request, Borrowing $borrowing)
     {
-        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE']);
+        $form = $this->createForm(BorrowingType::class, $borrowing, ['method' => 'DELETE', "show_all_records" => true]);
         $form->handleRequest($request);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {

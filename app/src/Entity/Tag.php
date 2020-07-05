@@ -39,7 +39,7 @@ class Tag
      * @Assert\NotBlank()
      * @Assert\Length(
      *     min="3",
-     *     max="10",
+     *     max="30",
      * )
      */
     private $title;

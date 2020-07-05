@@ -8,7 +8,6 @@ namespace App\Entity;
 use App\Repository\PerformerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\Entity(repositoryClass=PerformerRepository::class)
  * @ORM\table(name="performers")

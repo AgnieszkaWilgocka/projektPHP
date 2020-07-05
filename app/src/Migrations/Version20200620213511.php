@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+/**
+ * Doctrine migrations
+ */
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -12,11 +15,23 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200620213511 extends AbstractMigration
 {
+    /**
+     * Getter for description
+     *
+     * @return string
+     */
     public function getDescription() : string
     {
         return '';
     }
 
+    /**
+     * Function up
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -28,6 +43,13 @@ final class Version20200620213511 extends AbstractMigration
         $this->addSql('ALTER TABLE users_data CHANGE users_id users_id INT DEFAULT NULL, CHANGE nick nick VARCHAR(45) DEFAULT NULL');
     }
 
+    /**
+     * Function down
+     *
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs

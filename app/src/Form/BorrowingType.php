@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Record;
 use App\Repository\RecordRepository;
+use App\Service\RecordService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,21 +18,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BorrowingType extends AbstractType
 {
+
     /**
-     * Record repository
+     * Record service
      *
-     * @var RecordRepository
+     * @var RecordService
      */
-    private $recordRepository;
+    private $recordService;
 
     /**
      * BorrowingType constructor.
      *
-     * @param RecordRepository $recordRepository
+     * @param RecordService $recordService
      */
-    public function __construct(RecordRepository $recordRepository)
+    public function __construct(RecordService $recordService)
     {
-        $this->recordRepository = $recordRepository;
+        $this->recordService = $recordService;
     }
 
     /**
@@ -42,13 +44,14 @@ class BorrowingType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder->add(
             'record',
             EntityType::class,
             [
                 'class' => Record::class,
                 'choice_label' => 'title',
-                'query_builder' => $this->recordRepository->queryAvailableRecords(),
+                'query_builder' => $options["show_all_records"] ? $this->recordService->getAllRecords() : $this->recordService->getAvailableRecords(),
                 'required' => true,
                 'placeholder' => 'choice_record',
             ]
@@ -71,6 +74,8 @@ class BorrowingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([BorrowingType::class]);
+        $resolver->setRequired("show_all_records");
+        $resolver->setAllowedTypes("show_all_records", "bool");
     }
 
     /**

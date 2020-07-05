@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Entity\Record;
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
@@ -97,15 +98,27 @@ class RecordRepository extends ServiceEntityRepository
     }
 
     /**
-     * Query available records
+     * Query builder for all records
      *
-     * @return QueryBuilder Query builder
+     * @return QueryBuilder
      */
-    public function queryAvailableRecords(): QueryBuilder
+    public function getAllRecords(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->where('record.amount > 0');
+            ->select('record');
     }
+    /**
+     * Query builder for only available records
+     *
+     * @return QueryBuilder
+     */
+    public function getAvailableRecords(): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->where('record.amount > 0')
+            ->orderBy('record.title', 'ASC');
+    }
+
     /**
      * Get or create new query builder
      *
